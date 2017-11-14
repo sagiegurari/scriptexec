@@ -1,0 +1,2 @@
+linters: with_defaults(line_length_linter(120), trailing_whitespace_linter = NULL)
+exclusions: list()

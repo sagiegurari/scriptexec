@@ -1,0 +1,33 @@
+---
+title: "scriptexec"
+author: "Sagie Gur-Ari"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Executing Scripts
+
+The purpose of the scriptexec package is to enable quick and easy way to execute native scripts.
+
+```{r, warning = FALSE}
+library(scriptexec)
+
+#execute script text
+output <- scriptexec::script_execute('echo Current Directory:\ndir')
+cat(sprintf('%s\n', output))
+
+#execute multiple commands as a script
+output <- scriptexec::script_execute(c('cd', 'echo User Home:', 'dir'))
+cat(sprintf('%s\n', output))
+```
