@@ -1,5 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 .lintr
-.*.yml
+^travis\.yml$
 ^appveyor\.yml$
