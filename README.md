@@ -1,5 +1,7 @@
 # scriptexec
 
+[![Build Status](https://travis-ci.org/sagiegurari/scriptexec.svg)](http://travis-ci.org/sagiegurari/scriptexec) [![codecov](https://codecov.io/gh/sagiegurari/scriptexec/branch/master/graph/badge.svg)](https://codecov.io/gh/sagiegurari/scriptexec)
+
 > Run complex native scripts with a single command, similar to system commands.
 
 * [Overview](#overview)
