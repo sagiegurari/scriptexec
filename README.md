@@ -1,7 +1,7 @@
 # scriptexec
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/scriptexec)](https://cran.r-project.org/package=scriptexec) [![Build Status](https://travis-ci.org/sagiegurari/scriptexec.svg)](http://travis-ci.org/sagiegurari/scriptexec) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/sagiegurari/scriptexec?branch=master&svg=true)](https://ci.appveyor.com/project/sagiegurari/scriptexec) [![codecov](https://codecov.io/gh/sagiegurari/scriptexec/branch/master/graph/badge.svg)](https://codecov.io/gh/sagiegurari/scriptexec)<br>
-[![CRAN](https://img.shields.io/cran/l/devtools.svg)](https://github.com/sagiegurari/scriptexec/blob/master/LICENSE)[![Rdoc](http://www.rdocumentation.org/badges/version/scriptexec)](http://www.rdocumentation.org/packages/scriptexec)
+[![CRAN](https://img.shields.io/cran/l/scriptexec.svg)](https://github.com/sagiegurari/scriptexec/blob/master/LICENSE) [![Rdoc](http://www.rdocumentation.org/badges/version/scriptexec)](http://www.rdocumentation.org/packages/scriptexec)
 
 > Run complex native scripts with a single command, similar to system commands.
 
