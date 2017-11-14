@@ -3,7 +3,7 @@
 \name{script_execute}
 \alias{script_execute}
 \title{Executes a script and returns the output.
-The stout and sterr are captured and returned.
+The stdout and stderr are captured and returned.
 In case of errors, the exit code will return in the status field.}
 \usage{
 script_execute(script)
@@ -16,7 +16,7 @@ The script output, see system2 documentation
 }
 \description{
 Executes a script and returns the output.
-The stout and sterr are captured and returned.
+The stdout and stderr are captured and returned.
 In case of errors, the exit code will return in the status field.
 }
 \examples{

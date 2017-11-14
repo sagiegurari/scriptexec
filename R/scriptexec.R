@@ -66,7 +66,7 @@ get_command <- function(filename) {
 }
 
 #' Executes a script and returns the output.
-#' The stout and sterr are captured and returned.
+#' The stdout and stderr are captured and returned.
 #' In case of errors, the exit code will return in the status field.
 #'
 #' @param script The script text
