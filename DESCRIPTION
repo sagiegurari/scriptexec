@@ -1,6 +1,6 @@
 Package: scriptexec
 Title: Execute native scripts
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: person("Sagie", "Gur-Ari", email = "sagiegurari@gmail.com", role = c("aut", "cre"))
 Description: Run complex native scripts with a single command, similar to system commands.
 License: file LICENSE
