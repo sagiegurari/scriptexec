@@ -10,7 +10,7 @@
 * [Installation](#installation)
 * [API Documentation](http://www.rdocumentation.org/packages/scriptexec)
 * [Contributing](.github/CONTRIBUTING.md)
-* [Release History](#history)
+* [Release History](NEWS.md)
 * [License](#license)
 
 <a name="overview"></a>
@@ -56,10 +56,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 <a name="history"></a>
 ## Release History
 
-| Date        | Version | Description |
-| ----------- | ------- | ----------- |
-| 2017-11-06  | v0.1.6  | Maintenance |
-| 2017-11-04  | v0.1.1  | Initial release. |
+See [NEWS](NEWS.md)
 
 <a name="license"></a>
 ## License
