@@ -101,6 +101,7 @@ get_command <- function(filename) {
 #'
 #' @param script The script text
 #' @param args Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)
+#' @param env Optional character vector of name=value strings to set environment variables
 #' @return The script output, see system2 documentation
 #' @export
 #' @examples
@@ -120,7 +121,7 @@ get_command <- function(filename) {
 #' output <- script_execute('exit 1')
 #' cat(sprintf('Status: %s\n', output$status))
 #' cat(sprintf('%s\n', output))
-script_execute <- function(script, args = c()) {
+script_execute <- function(script, args = c(), env = character()) {
     full.script <- modify_script(script = script, args = args)
     
     # create a temporary file to store the script
@@ -131,7 +132,7 @@ script_execute <- function(script, args = c()) {
     cli_args <- command_struct$args
     
     arg.list <- list(command = command, args = cli_args, stdout = TRUE, stderr = TRUE, 
-        stdin = "", input = NULL, env = character(), wait = TRUE)
+        stdin = "", input = NULL, env = env, wait = TRUE)
     windows <- is_windows()
     if (windows) {
         c(list(minimized = TRUE, invisible = TRUE), arg.list)

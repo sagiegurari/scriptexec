@@ -6,12 +6,14 @@
 The stdout and stderr are captured and returned.
 In case of errors, the exit code will return in the status field.}
 \usage{
-script_execute(script, args = c())
+script_execute(script, args = c(), env = character())
 }
 \arguments{
 \item{script}{The script text}
 
 \item{args}{Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)}
+
+\item{env}{Optional character vector of name=value strings to set environment variables}
 }
 \value{
 The script output, see system2 documentation

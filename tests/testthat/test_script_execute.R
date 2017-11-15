@@ -29,10 +29,26 @@ test_that("script_execute cli arguments", {
 
     output <- scriptexec::script_execute(paste("echo", arg, sep = " "), c("TEST_R"))
     expect_equal(output$status, 0)
-    position = regexpr("TEST_R", output$output)
-    found = FALSE
+    position <- regexpr("TEST_R", output$output)
+    found <- FALSE
     if (position > 0) {
-        found = TRUE
+        found <- TRUE
+    }
+    expect_equal(found, TRUE)
+})
+
+test_that("script_execute env vars", {
+    arg <- "$ENV_TEST"
+    if (.Platform$OS.type == "windows") {
+        arg  <- "%ENV_TEST%"
+    }
+
+    output <- scriptexec::script_execute(paste("echo", arg, sep = " "), env = c("ENV_TEST=MYENV"))
+    expect_equal(output$status, 0)
+    position <- regexpr("MYENV", output$output)
+    found <- FALSE
+    if (position > 0) {
+        found <- TRUE
     }
     expect_equal(found, TRUE)
 })
