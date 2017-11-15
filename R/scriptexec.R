@@ -70,6 +70,7 @@ get_command <- function(filename) {
 #' In case of errors, the exit code will return in the status field.
 #'
 #' @param script The script text
+#' @param args Optional script command line arguments
 #' @return The script output, see system2 documentation
 #' @export
 #' @examples
@@ -77,7 +78,7 @@ get_command <- function(filename) {
 #' cat(sprintf('%s\n', output))
 #' output <- script_execute(c('cd', 'echo User Home:', 'dir')) #execute multiple commands as a script
 #' cat(sprintf('%s\n', output))
-script_execute <- function(script) {
+script_execute <- function(script, args = c()) {
     full.script <- modify_script(script)
     
     # create a temporary file to store the script
@@ -85,9 +86,11 @@ script_execute <- function(script) {
     
     command_struct <- get_command(filename)
     command <- command_struct[[1]]
-    args <- command_struct[[2]]
+    cli_args <- command_struct[[2]]
     
-    output <- system2(command, args = args, stdout = TRUE, stderr = TRUE, stdin = "", 
+    all_args <- c(cli_args, args)
+    
+    output <- system2(command, args = all_args, stdout = TRUE, stderr = TRUE, stdin = "", 
         input = NULL, env = character(), wait = TRUE, minimized = TRUE, invisible = TRUE)
     
     status <- attr(output, "status")

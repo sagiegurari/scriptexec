@@ -8,6 +8,8 @@ formatR::tidy_dir("R", indent = 4, arrow = TRUE, brace.newline = FALSE, blank = 
 #run lint
 lintr::lint_package()
 
+#run tests
+devtools::test()
+
 #check package
-devtools::build_win()
 devtools::check()
