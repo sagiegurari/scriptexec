@@ -38,12 +38,12 @@ test_that("script_execute cli arguments", {
 })
 
 test_that("script_execute env vars", {
-    arg <- "$ENV_TEST"
+    command <- "echo $ENV_TEST"
     if (.Platform$OS.type == "windows") {
-        arg  <- "%ENV_TEST%"
+        command <- "echo %ENV_TEST%"
     }
 
-    output <- scriptexec::script_execute(paste("echo", arg, sep = " "), env = c("ENV_TEST=MYENV"))
+    output <- scriptexec::script_execute(command, env = c("ENV_TEST=MYENV"))
     expect_equal(output$status, 0)
     position <- regexpr("MYENV", output$output)
     found <- FALSE
