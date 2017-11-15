@@ -17,3 +17,6 @@ The modified script text
 \description{
 Modifies the provided script text and ensures the script content is executed in the correct location.
 }
+\examples{
+full.script <- modify_script(script = script, args = args)
+}

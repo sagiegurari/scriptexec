@@ -12,3 +12,6 @@ True if windows, else false.
 \description{
 Returns true if windows, else false.
 }
+\examples{
+windows <- is_windows()
+}

@@ -15,3 +15,6 @@ The temporary file name
 \description{
 Creates a temporary file, writes the provided script content into it and returns the file name.
 }
+\examples{
+filename <- create_temp_file(script)
+}

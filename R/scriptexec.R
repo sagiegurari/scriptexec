@@ -8,6 +8,9 @@ NULL
 #' Returns true if windows, else false.
 #'
 #' @return True if windows, else false.
+#' @export
+#' @examples
+#' windows <- is_windows()
 is_windows <- function() {
     os <- .Platform$OS.type  #windows or unix
     (os == "windows")
@@ -18,6 +21,9 @@ is_windows <- function() {
 #' @param script The script text
 #' @param args Optional script command line arguments
 #' @return The modified script text
+#' @export
+#' @examples
+#' full.script <- modify_script(script = script, args = args)
 modify_script <- function(script, args = c()) {
     # setup cd command
     cwd <- getwd()
@@ -45,6 +51,9 @@ modify_script <- function(script, args = c()) {
 #'
 #' @param script The script text
 #' @return The temporary file name
+#' @export
+#' @examples
+#' filename <- create_temp_file(script)
 create_temp_file <- function(script) {
     windows <- is_windows()
     
@@ -68,7 +77,11 @@ create_temp_file <- function(script) {
 #'
 #' @param filename The script file to execute
 #' @return A list holding the command and arguments
-
+#' @export
+#' @examples
+#' command_struct <- get_command(filename)
+#' command <- command_struct$command
+#' cli_args <- command_struct$args
 get_command <- function(filename) {
     windows <- is_windows()
     
@@ -109,8 +122,8 @@ script_execute <- function(script, args = c()) {
     filename <- create_temp_file(full.script)
     
     command_struct <- get_command(filename)
-    command <- command_struct[[1]]
-    cli_args <- command_struct[[2]]
+    command <- command_struct$command
+    cli_args <- command_struct$args
     
     output <- system2(command, args = cli_args, stdout = TRUE, stderr = TRUE, stdin = "", 
         input = NULL, env = character(), wait = TRUE, minimized = TRUE, invisible = TRUE)
