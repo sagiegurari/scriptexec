@@ -16,7 +16,7 @@ A list holding the command and arguments
 Returns the command and arguments needed to execute the provided script file on the current platform.
 }
 \examples{
-command_struct <- get_command(filename)
+command_struct <- get_command('myfile.sh')
 command <- command_struct$command
 cli_args <- command_struct$args
 }

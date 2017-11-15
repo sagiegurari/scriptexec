@@ -18,5 +18,5 @@ The modified script text
 Modifies the provided script text and ensures the script content is executed in the correct location.
 }
 \examples{
-full.script <- modify_script(script = script, args = args)
+full.script <- modify_script(script = 'echo test', args = c('first', 'second'))
 }

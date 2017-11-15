@@ -23,7 +23,7 @@ is_windows <- function() {
 #' @return The modified script text
 #' @export
 #' @examples
-#' full.script <- modify_script(script = script, args = args)
+#' full.script <- modify_script(script = 'echo test', args = c('first', 'second'))
 modify_script <- function(script, args = c()) {
     # setup cd command
     cwd <- getwd()
@@ -53,7 +53,7 @@ modify_script <- function(script, args = c()) {
 #' @return The temporary file name
 #' @export
 #' @examples
-#' filename <- create_temp_file(script)
+#' filename <- create_temp_file('echo test')
 create_temp_file <- function(script) {
     windows <- is_windows()
     
@@ -79,7 +79,7 @@ create_temp_file <- function(script) {
 #' @return A list holding the command and arguments
 #' @export
 #' @examples
-#' command_struct <- get_command(filename)
+#' command_struct <- get_command('myfile.sh')
 #' command <- command_struct$command
 #' cli_args <- command_struct$args
 get_command <- function(filename) {
