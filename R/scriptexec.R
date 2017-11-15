@@ -68,6 +68,7 @@ create_temp_file <- function(script) {
 #'
 #' @param filename The script file to execute
 #' @return A list holding the command and arguments
+
 get_command <- function(filename) {
     windows <- is_windows()
     
