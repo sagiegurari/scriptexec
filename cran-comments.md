@@ -1,6 +1,10 @@
 ## Comments
 
-Add support for command line arguments to be passed to the script
+* Add support for command line arguments to be passed to the script #1
+* Merge all output text instead of vector #5
+* Add status 0 instead of null #6
+* Export all functions #4
+* Add demos #3
 
 ## Test environments
 
@@ -11,11 +15,7 @@ Add support for command line arguments to be passed to the script
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: ‘Sagie Gur-Ari <sagiegurari@gmail.com>’
-
-Days since last update: 0
+0 errors | 0 warnings | 0 notes
 
 ## Reverse dependencies
 
