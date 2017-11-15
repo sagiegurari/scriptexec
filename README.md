@@ -38,7 +38,7 @@ cat(sprintf('%s\n', output))
 In order to use this library, run the following command:
 
 ```r
-install.packages("lintr")
+install.packages("scriptexec")
 ```
 
 Or install latest version from github:
