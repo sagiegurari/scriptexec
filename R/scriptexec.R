@@ -115,7 +115,12 @@ script_execute <- function(script, args = c()) {
     output <- system2(command, args = cli_args, stdout = TRUE, stderr = TRUE, stdin = "", 
         input = NULL, env = character(), wait = TRUE, minimized = TRUE, invisible = TRUE)
     
+    # get output
     status <- attr(output, "status")
+    if (is.null(status)) {
+        status <- 0
+    }
+    output.text <- paste(c(output), sep = "\n", collapse = "")
     
-    list(status = status, output = c(output))
+    list(status = status, output = output.text)
 }

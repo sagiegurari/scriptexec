@@ -3,17 +3,22 @@ context("script_execute")
 
 test_that("script_execute valid exit code", {
     output <- scriptexec::script_execute("exit 0")
-    expect_equal(output$status, NULL)
+    expect_equal(output$status, 0)
 })
 
 test_that("script_execute valid command", {
     output <- scriptexec::script_execute("dir")
-    expect_equal(output$status, NULL)
+    expect_equal(output$status, 0)
 })
 
 test_that("script_execute valid commands", {
     output <- scriptexec::script_execute(c("dir", "cd", "dir"))
-    expect_equal(output$status, NULL)
+    expect_equal(output$status, 0)
+})
+
+test_that("script_execute cli arguments is NULL", {
+    output <- scriptexec::script_execute("exit 0", args = NULL)
+    expect_equal(output$status, 0)
 })
 
 test_that("script_execute cli arguments", {
@@ -23,9 +28,8 @@ test_that("script_execute cli arguments", {
     }
 
     output <- scriptexec::script_execute(paste("echo", arg, sep = " "), c("TEST_R"))
-    expect_equal(output$status, NULL)
-    stdout <- paste(output$output, sep = "\n", collapse="")
-    position = regexpr("TEST_R", stdout)
+    expect_equal(output$status, 0)
+    position = regexpr("TEST_R", output$output)
     found = FALSE
     if (position > 0) {
         found = TRUE
