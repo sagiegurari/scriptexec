@@ -16,13 +16,29 @@ is_windows <- function() {
 #' Modifies the provided script text and ensures the script content is executed in the correct location.
 #'
 #' @param script The script text
+#' @param args Optional script command line arguments
 #' @return The modified script text
-modify_script <- function(script) {
-    # modify script
+modify_script <- function(script, args = c()) {
+    # setup cd command
     cwd <- getwd()
     cd.line <- paste("cd", cwd, sep = " ")
+    
+    # setup script arguments
+    windows <- is_windows()
+    index <- 1
+    var.prefix <- "$"
+    if (windows) {
+        var.prefix <- "SET %"
+    }
+    args.lines <- c()
+    for (arg in args) {
+        args.line <- paste(var.prefix, index, "=", arg, sep = "")
+        args.lines <- c(args.lines, args.line)
+        index <- index + 1
+    }
+    
     script.string <- paste(script, collapse = "\n")
-    paste(cd.line, script.string, sep = "\n")
+    paste(cd.line, args.lines, script.string, sep = "\n")
 }
 
 #' Creates a temporary file, writes the provided script content into it and returns the file name.
@@ -79,7 +95,7 @@ get_command <- function(filename) {
 #' output <- script_execute(c('cd', 'echo User Home:', 'dir')) #execute multiple commands as a script
 #' cat(sprintf('%s\n', output))
 script_execute <- function(script, args = c()) {
-    full.script <- modify_script(script)
+    full.script <- modify_script(script = script, args = args)
     
     # create a temporary file to store the script
     filename <- create_temp_file(full.script)
@@ -88,9 +104,7 @@ script_execute <- function(script, args = c()) {
     command <- command_struct[[1]]
     cli_args <- command_struct[[2]]
     
-    all_args <- c(cli_args, args)
-    
-    output <- system2(command, args = all_args, stdout = TRUE, stderr = TRUE, stdin = "", 
+    output <- system2(command, args = cli_args, stdout = TRUE, stderr = TRUE, stdin = "", 
         input = NULL, env = character(), wait = TRUE, minimized = TRUE, invisible = TRUE)
     
     status <- attr(output, "status")

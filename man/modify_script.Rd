@@ -4,10 +4,12 @@
 \alias{modify_script}
 \title{Modifies the provided script text and ensures the script content is executed in the correct location.}
 \usage{
-modify_script(script)
+modify_script(script, args = c())
 }
 \arguments{
 \item{script}{The script text}
+
+\item{args}{Optional script command line arguments}
 }
 \value{
 The modified script text
