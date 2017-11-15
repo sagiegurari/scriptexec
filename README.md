@@ -37,6 +37,7 @@ cat(sprintf("%s\n", output))
 
 #status is returned in case of errors
 output <- scriptexec::script_execute("exit 1")
+cat(sprintf("Status: %s\n", output$status))
 cat(sprintf("%s\n", output))
 ````
 
