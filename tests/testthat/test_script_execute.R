@@ -24,7 +24,8 @@ test_that("script_execute cli arguments", {
 
     output <- scriptexec::script_execute(paste("echo", arg, sep = " "), c("TEST_R"))
     expect_equal(output$status, NULL)
-    position = regexpr("TEST_R", output$output)
+    stdout <- paste(output$output, sep = "\n", collapse="")
+    position = regexpr("TEST_R", stdout)
     found = FALSE
     if (position > 0) {
         found = TRUE
