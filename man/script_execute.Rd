@@ -11,7 +11,7 @@ script_execute(script, args = c())
 \arguments{
 \item{script}{The script text}
 
-\item{args}{Optional script command line arguments}
+\item{args}{Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)}
 }
 \value{
 The script output, see system2 documentation
@@ -22,8 +22,15 @@ The stdout and stderr are captured and returned.
 In case of errors, the exit code will return in the status field.
 }
 \examples{
-output <- script_execute('echo Current Directory:\\ndir') #execute script text
+#execute script text
+output <- script_execute('echo Current Directory:\\ndir') 
 cat(sprintf('\%s\\n', output))
-output <- script_execute(c('cd', 'echo User Home:', 'dir')) #execute multiple commands as a script
+
+#execute multiple commands as a script
+output <- script_execute(c('cd', 'echo User Home:', 'dir'))
+cat(sprintf('\%s\\n', output))
+
+#pass argument to the script, later defined as ARG1
+output <- script_execute(c('echo $ARG1 $ARG2'), c('TEST1', 'TEST2'))
 cat(sprintf('\%s\\n', output))
 }

@@ -17,14 +17,14 @@ test_that("script_execute valid commands", {
 })
 
 test_that("script_execute cli arguments", {
-    arg <- "$1"
+    arg <- "$ARG1"
     if (.Platform$OS.type == "windows") {
-        arg  <- "%1"
+        arg  <- "%ARG1%"
     }
 
-    output <- scriptexec::script_execute(c("echo ", arg), c("TEST"))
+    output <- scriptexec::script_execute(paste("echo", arg, sep = " "), c("TEST_R"))
     expect_equal(output$status, NULL)
-    position = regexpr('TEST', output$output)
+    position = regexpr("TEST_R", output$output)
     found = FALSE
     if (position > 0) {
         found = TRUE

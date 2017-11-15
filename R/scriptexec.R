@@ -26,9 +26,9 @@ modify_script <- function(script, args = c()) {
     # setup script arguments
     windows <- is_windows()
     index <- 1
-    var.prefix <- "$"
+    var.prefix <- "ARG"
     if (windows) {
-        var.prefix <- "SET %"
+        var.prefix <- "SET ARG"
     }
     args.lines <- c()
     for (arg in args) {
@@ -86,13 +86,20 @@ get_command <- function(filename) {
 #' In case of errors, the exit code will return in the status field.
 #'
 #' @param script The script text
-#' @param args Optional script command line arguments
+#' @param args Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)
 #' @return The script output, see system2 documentation
 #' @export
 #' @examples
-#' output <- script_execute('echo Current Directory:\ndir') #execute script text
+#' #execute script text
+#' output <- script_execute('echo Current Directory:\ndir') 
 #' cat(sprintf('%s\n', output))
-#' output <- script_execute(c('cd', 'echo User Home:', 'dir')) #execute multiple commands as a script
+#'
+#' #execute multiple commands as a script
+#' output <- script_execute(c('cd', 'echo User Home:', 'dir'))
+#' cat(sprintf('%s\n', output))
+#'
+#' #pass argument to the script, later defined as ARG1
+#' output <- script_execute(c('echo $ARG1 $ARG2'), c('TEST1', 'TEST2'))
 #' cat(sprintf('%s\n', output))
 script_execute <- function(script, args = c()) {
     full.script <- modify_script(script = script, args = args)
