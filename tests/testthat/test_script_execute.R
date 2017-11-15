@@ -17,7 +17,12 @@ test_that("script_execute valid commands", {
 })
 
 test_that("script_execute cli arguments", {
-    output <- scriptexec::script_execute("exit $1", c("10"))
+    arg <- "$1"
+    if (.Platform$OS.type == "windows") {
+        arg  <- "%1"
+    }
+
+    output <- scriptexec::script_execute(c("exit", arg), c("10"))
     expect_equal(output$status, 10)
 })
 
