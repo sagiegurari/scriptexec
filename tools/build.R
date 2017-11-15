@@ -9,4 +9,5 @@ formatR::tidy_dir("R", indent = 4, arrow = TRUE, brace.newline = FALSE, blank = 
 lintr::lint_package()
 
 #check package
+devtools::build_win()
 devtools::check()
