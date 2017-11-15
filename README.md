@@ -24,12 +24,20 @@ Simply load the library and invoke the script_execute
 library(scriptexec)
 
 #execute script text
-output <- scriptexec::script_execute('echo Current Directory:\ndir')
-cat(sprintf('%s\n', output))
+output <- scriptexec::script_execute("echo Current Directory:\ndir") 
+cat(sprintf("%s\n", output))
 
 #execute multiple commands as a script
-output <- scriptexec::script_execute(c('cd', 'echo User Home:', 'dir'))
-cat(sprintf('%s\n', output))
+output <- scriptexec::script_execute(c("cd", "echo User Home:", "dir"))
+cat(sprintf("%s\n", output))
+
+#pass argument to the script, later defined as ARG1
+output <- script_execute(c("echo $ARG1 $ARG2"), c("TEST1", "TEST2"))
+cat(sprintf("%s\n", output))
+
+#status is returned in case of errors
+output <- scriptexec::script_execute("exit 1")
+cat(sprintf("%s\n", output))
 ````
 
 <a name="installation"></a>
