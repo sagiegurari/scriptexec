@@ -11,7 +11,11 @@ Add support for command line arguments to be passed to the script
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 note
+0 errors | 0 warnings | 1 note
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Sagie Gur-Ari <sagiegurari@gmail.com>’
+
+Days since last update: 0
 
 ## Reverse dependencies
 
