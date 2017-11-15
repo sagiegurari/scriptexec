@@ -13,7 +13,7 @@ script_execute(script, args = c(), env = character())
 
 \item{args}{Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)}
 
-\item{env}{Optional character vector of name=value strings to set environment variables}
+\item{env}{Optional character vector of name=value strings to set environment variables (not supported on windows)}
 }
 \value{
 The script output, see system2 documentation

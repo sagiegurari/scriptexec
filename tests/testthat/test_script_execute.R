@@ -44,13 +44,14 @@ test_that("script_execute env vars", {
     }
 
     output <- scriptexec::script_execute(command, env = c("ENV_TEST=MYENV"))
+    windows = scriptexec::is_windows()
     expect_equal(output$status, 0)
     position <- regexpr("MYENV", output$output)
     found <- FALSE
     if (position > 0) {
         found <- TRUE
     }
-    expect_equal(found, TRUE)
+    expect_equal(found, !windows)
 })
 
 test_that("script_execute error exit code", {

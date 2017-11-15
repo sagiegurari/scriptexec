@@ -101,7 +101,7 @@ get_command <- function(filename) {
 #'
 #' @param script The script text
 #' @param args Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)
-#' @param env Optional character vector of name=value strings to set environment variables
+#' @param env Optional character vector of name=value strings to set environment variables (not supported on windows)
 #' @return The script output, see system2 documentation
 #' @export
 #' @examples
