@@ -105,15 +105,20 @@ get_command <- function(filename) {
 #' @export
 #' @examples
 #' #execute script text
-#' output <- script_execute('echo Current Directory:\ndir') 
-#' cat(sprintf('%s\n', output))
+#' output <- script_execute('echo Current Directory:\ndir')
+#' cat(sprintf('Exit Status: %s Output%s\n', output$status, output$output))
 #'
 #' #execute multiple commands as a script
 #' output <- script_execute(c('cd', 'echo User Home:', 'dir'))
-#' cat(sprintf('%s\n', output))
+#' cat(sprintf('Exit Status: %s Output%s\n', output$status, output$output))
 #'
 #' #pass argument to the script, later defined as ARG1
 #' output <- script_execute(c('echo $ARG1 $ARG2'), c('TEST1', 'TEST2'))
+#' cat(sprintf('%s\n', output))
+#'
+#' #status is returned in case of errors
+#' output <- script_execute('exit 1')
+#' cat(sprintf('Status: %s\n', output$status))
 #' cat(sprintf('%s\n', output))
 script_execute <- function(script, args = c()) {
     full.script <- modify_script(script = script, args = args)
@@ -125,8 +130,14 @@ script_execute <- function(script, args = c()) {
     command <- command_struct$command
     cli_args <- command_struct$args
     
-    output <- system2(command, args = cli_args, stdout = TRUE, stderr = TRUE, stdin = "", 
-        input = NULL, env = character(), wait = TRUE, minimized = TRUE, invisible = TRUE)
+    arg.list <- list(command = command, args = cli_args, stdout = TRUE, stderr = TRUE, 
+        stdin = "", input = NULL, env = character(), wait = TRUE)
+    windows <- is_windows()
+    if (windows) {
+        c(list(minimized = TRUE, invisible = TRUE), arg.list)
+    }
+    
+    output <- do.call(system2, arg.list)
     
     # get output
     status <- attr(output, "status")
