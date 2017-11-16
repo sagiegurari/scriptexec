@@ -125,7 +125,7 @@ get_command <- function(filename) {
 #' output <- execute('exit 1')
 #' cat(sprintf('Status: %s\n', output$status))
 #' cat(sprintf('%s\n', output))
-execute <- function(script, args = c(), env = character()) {
+execute <- function(script = "", args = c(), env = character()) {
     full.script <- modify_script(script = script, args = args)
     
     # create a temporary file to store the script

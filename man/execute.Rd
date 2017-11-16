@@ -6,7 +6,7 @@
 The stdout and stderr are captured and returned.
 In case of errors, the exit code will return in the status field.}
 \usage{
-execute(script, args = c(), env = character())
+execute(script = "", args = c(), env = character())
 }
 \arguments{
 \item{script}{The script text}
