@@ -24,19 +24,19 @@ The purpose of the scriptexec package is to enable quick and easy way to execute
 library(scriptexec)
 
 #execute script text
-output <- scriptexec::script_execute("echo Current Directory:\ndir")
+output <- scriptexec::execute("echo Current Directory:\ndir")
 cat(sprintf("Exit Status: %s Output: %s\n", output$status, output$output))
 
 #execute multiple commands as a script
-output <- scriptexec::script_execute(c("cd", "echo User Home:", "dir"))
+output <- scriptexec::execute(c("cd", "echo User Home:", "dir"))
 cat(sprintf("Exit Status: %s Output: %s\n", output$status, output$output))
 
 #pass argument to the script, later defined as ARG1
-output <- script_execute(c("echo $ARG1 $ARG2"), c("TEST1", "TEST2"))
+output <- execute(c("echo $ARG1 $ARG2"), c("TEST1", "TEST2"))
 cat(sprintf("%s\n", output))
 
 #non zero status code is returned in case of errors
-output <- scriptexec::script_execute("exit 1")
+output <- scriptexec::execute("exit 1")
 cat(sprintf("Status: %s\n", output$status))
 cat(sprintf("%s\n", output))
 ```

@@ -1,33 +1,33 @@
 library(scriptexec)
-context("script_execute")
+context("execute")
 
-test_that("script_execute valid exit code", {
-    output <- scriptexec::script_execute("exit 0")
+test_that("execute valid exit code", {
+    output <- scriptexec::execute("exit 0")
     expect_equal(output$status, 0)
 })
 
-test_that("script_execute valid command", {
-    output <- scriptexec::script_execute("dir")
+test_that("execute valid command", {
+    output <- scriptexec::execute("dir")
     expect_equal(output$status, 0)
 })
 
-test_that("script_execute valid commands", {
-    output <- scriptexec::script_execute(c("dir", "cd", "dir"))
+test_that("execute valid commands", {
+    output <- scriptexec::execute(c("dir", "cd", "dir"))
     expect_equal(output$status, 0)
 })
 
-test_that("script_execute cli arguments is NULL", {
-    output <- scriptexec::script_execute("exit 0", args = NULL)
+test_that("execute cli arguments is NULL", {
+    output <- scriptexec::execute("exit 0", args = NULL)
     expect_equal(output$status, 0)
 })
 
-test_that("script_execute cli arguments", {
+test_that("execute cli arguments", {
     arg <- "$ARG1"
     if (.Platform$OS.type == "windows") {
-        arg  <- "%ARG1%"
+        arg <- "%ARG1%"
     }
-
-    output <- scriptexec::script_execute(paste("echo", arg, sep = " "), c("TEST_R"))
+    
+    output <- scriptexec::execute(paste("echo", arg, sep = " "), c("TEST_R"))
     expect_equal(output$status, 0)
     position <- regexpr("TEST_R", output$output)
     found <- FALSE
@@ -37,14 +37,14 @@ test_that("script_execute cli arguments", {
     expect_equal(found, TRUE)
 })
 
-test_that("script_execute env vars", {
+test_that("execute env vars", {
     command <- "echo $ENV_TEST"
     if (.Platform$OS.type == "windows") {
         command <- "echo %ENV_TEST%"
     }
-
-    output <- scriptexec::script_execute(command, env = c("ENV_TEST=MYENV"))
-    windows = scriptexec::is_windows()
+    
+    output <- scriptexec::execute(command, env = c("ENV_TEST=MYENV"))
+    windows <- scriptexec::is_windows()
     expect_equal(output$status, 0)
     position <- regexpr("MYENV", output$output)
     found <- FALSE
@@ -54,7 +54,7 @@ test_that("script_execute env vars", {
     expect_equal(found, !windows)
 })
 
-test_that("script_execute error exit code", {
-    output <- scriptexec::script_execute("exit 1")
+test_that("execute error exit code", {
+    output <- scriptexec::execute("exit 1")
     expect_equal(output$status, 1)
 })

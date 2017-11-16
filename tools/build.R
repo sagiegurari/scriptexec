@@ -1,15 +1,18 @@
 
-#regenerate documentation
-devtools::document() 
+# regenerate documentation
+devtools::document()
 
-#format code
-formatR::tidy_dir("R", indent = 4, arrow = TRUE, brace.newline = FALSE, blank = TRUE)
+# format code
+format.config <- list(recursive = TRUE, indent = 4, arrow = TRUE, brace.newline = FALSE, blank = TRUE)
+do.call(formatR::tidy_dir, c("R", format.config))
+do.call(formatR::tidy_dir, c("tests", format.config))
+do.call(formatR::tidy_dir, c("demo", format.config))
 
-#run lint
+# run lint
 lintr::lint_package()
 
-#run tests
+# run tests
 devtools::test()
 
-#check package
+# check package
 devtools::check()

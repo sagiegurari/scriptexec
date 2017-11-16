@@ -6,5 +6,5 @@
 \alias{scriptexec-package}
 \title{scriptexec: Execute native scripts}
 \description{
-This package provides one main function: script_execute which executes the provided script and returns its output.
+This package provides one main function: execute which executes the provided script and returns its output.
 }
