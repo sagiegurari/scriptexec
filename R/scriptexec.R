@@ -107,17 +107,17 @@ get_command <- function(filename) {
 #' @examples
 #' #execute script text
 #' output <- script_execute('echo Current Directory:\ndir')
-#' cat(sprintf('Exit Status: %s Output%s\n', output$status, output$output))
+#' cat(sprintf('Exit Status: %s Output: %s\n', output$status, output$output))
 #'
 #' #execute multiple commands as a script
 #' output <- script_execute(c('cd', 'echo User Home:', 'dir'))
-#' cat(sprintf('Exit Status: %s Output%s\n', output$status, output$output))
+#' cat(sprintf('Exit Status: %s Output: %s\n', output$status, output$output))
 #'
 #' #pass argument to the script, later defined as ARG1
 #' output <- script_execute(c('echo $ARG1 $ARG2'), c('TEST1', 'TEST2'))
 #' cat(sprintf('%s\n', output))
 #'
-#' #status is returned in case of errors
+#' #non zero status code is returned in case of errors
 #' output <- script_execute('exit 1')
 #' cat(sprintf('Status: %s\n', output$status))
 #' cat(sprintf('%s\n', output))
