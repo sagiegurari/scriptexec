@@ -2,6 +2,7 @@
 
 ## 0.2.0
 
+* execute_script function renamed to execute
 * Add support for command line arguments to be passed to the script #1
 * Merge all output text instead of vector #5
 * Add status 0 instead of null #6
