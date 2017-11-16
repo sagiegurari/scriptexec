@@ -3,5 +3,6 @@
 export(create_temp_file)
 export(execute)
 export(get_command)
+export(get_platform_value)
 export(is_windows)
 export(modify_script)

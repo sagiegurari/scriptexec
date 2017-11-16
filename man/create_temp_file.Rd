@@ -4,7 +4,7 @@
 \alias{create_temp_file}
 \title{Creates a temporary file, writes the provided script content into it and returns the file name.}
 \usage{
-create_temp_file(script)
+create_temp_file(script = "")
 }
 \arguments{
 \item{script}{The script text}

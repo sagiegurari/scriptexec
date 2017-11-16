@@ -16,6 +16,25 @@ is_windows <- function() {
     (os == "windows")
 }
 
+#' Returns the value based on the current platform.
+#'
+#' @param unix_value The unix platform value
+#' @param windows_value The windows platform value
+#' @return unix_value in case of unix system, else the windows_value
+#' @export
+#' @examples
+#' platform_value <- get_platform_value('.sh', '.bat')
+get_platform_value <- function(unix_value, windows_value) {
+    windows <- is_windows()
+    
+    output <- unix_value
+    if (windows) {
+        output <- windows_value
+    }
+    
+    output
+}
+
 #' Modifies the provided script text and ensures the script content is executed in the correct location.
 #'
 #' @param script The script text
@@ -30,12 +49,8 @@ modify_script <- function(script, args = c()) {
     cd.line <- paste("cd", cwd, sep = " ")
     
     # setup script arguments
-    windows <- is_windows()
     index <- 1
-    var.prefix <- "ARG"
-    if (windows) {
-        var.prefix <- "SET ARG"
-    }
+    var.prefix <- get_platform_value("ARG", "SET ARG")
     args.lines <- c()
     for (arg in args) {
         args.line <- paste(var.prefix, index, "=", arg, sep = "")
@@ -54,13 +69,8 @@ modify_script <- function(script, args = c()) {
 #' @export
 #' @examples
 #' filename <- create_temp_file('echo test')
-create_temp_file <- function(script) {
-    windows <- is_windows()
-    
-    extension <- ".sh"
-    if (windows) {
-        extension <- ".bat"
-    }
+create_temp_file <- function(script = "") {
+    extension <- get_platform_value(".sh", ".bat")
     
     # create a temporary file to store the script
     filename <- tempfile("script_", fileext = extension)
@@ -83,14 +93,8 @@ create_temp_file <- function(script) {
 #' command <- command_struct$command
 #' cli_args <- command_struct$args
 get_command <- function(filename) {
-    windows <- is_windows()
-    
-    command <- "sh"
-    args <- c(filename)
-    if (windows) {
-        command <- "cmd.exe"
-        args <- c("/C", filename)
-    }
+    command <- get_platform_value("sh", "cmd.exe")
+    args <- get_platform_value(c(filename), c("/C", filename))
     
     list(command = command, args = args)
 }

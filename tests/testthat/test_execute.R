@@ -45,7 +45,7 @@ describe("execute", {
     })
     
     it("error exit code", {
-        output <- scriptexec::execute("exit 1")
+        expect_warning(output <- scriptexec::execute("exit 1"))
         expect_equal(output$status, 1)
     })
 })
