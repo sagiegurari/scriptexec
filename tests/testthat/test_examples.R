@@ -13,8 +13,9 @@ describe("examples", {
         output <- scriptexec::execute(c("cd", "echo User Home:", "dir"))
         expect_equal(output$status, 0)
         
-        # pass argument to the script, later defined as ARG1
-        output <- execute(c("echo $ARG1 $ARG2"), args = c("TEST1", "TEST2"))
+        # pass arguments to the script, later defined as ARG1, ARG2, ...
+        command <- get_os_string("echo $ARG1 $ARG2", "echo %ARG1% %ARG2%")
+        output <- execute(command, args = c("TEST1", "TEST2"))
         expect_equal(output$status, 0)
         expect_equal(is_string_exists("TEST1 TEST2", output$output), TRUE)
         

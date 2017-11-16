@@ -32,8 +32,8 @@ cat(sprintf('Exit Status: \%s Output: \%s\\n', output$status, output$output))
 output <- execute(c('cd', 'echo User Home:', 'dir'))
 cat(sprintf('Exit Status: \%s Output: \%s\\n', output$status, output$output))
 
-#pass argument to the script, later defined as ARG1
-output <- execute(c('echo $ARG1 $ARG2'), args = c('TEST1', 'TEST2'))
+#pass arguments to the script, later defined as ARG1, ARG2, ...
+output <- execute('echo $ARG1 $ARG2', args = c('TEST1', 'TEST2'))
 cat(sprintf('\%s\\n', output))
 
 #non zero status code is returned in case of errors
