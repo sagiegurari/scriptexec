@@ -1,7 +1,9 @@
 library(scriptexec)
-context("script_execute")
+context("is_windows")
 
-test_that("is_windows", {
-    windows <- scriptexec::is_windows()
-    expect_equal(windows, .Platform$OS.type == "windows")
+describe("execute", {
+    it("is_windows", {
+        windows <- scriptexec::is_windows()
+        expect_equal(windows, .Platform$OS.type == "windows")
+    })
 })

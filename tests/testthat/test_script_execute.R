@@ -1,60 +1,51 @@
-library(scriptexec)
 context("execute")
 
-test_that("execute valid exit code", {
-    output <- scriptexec::execute("exit 0")
-    expect_equal(output$status, 0)
-})
-
-test_that("execute valid command", {
-    output <- scriptexec::execute("dir")
-    expect_equal(output$status, 0)
-})
-
-test_that("execute valid commands", {
-    output <- scriptexec::execute(c("dir", "cd", "dir"))
-    expect_equal(output$status, 0)
-})
-
-test_that("execute cli arguments is NULL", {
-    output <- scriptexec::execute("exit 0", args = NULL)
-    expect_equal(output$status, 0)
-})
-
-test_that("execute cli arguments", {
-    arg <- "$ARG1"
-    if (.Platform$OS.type == "windows") {
-        arg <- "%ARG1%"
-    }
+describe("execute", {
+    source("helper.R")
     
-    output <- scriptexec::execute(paste("echo", arg, sep = " "), c("TEST_R"))
-    expect_equal(output$status, 0)
-    position <- regexpr("TEST_R", output$output)
-    found <- FALSE
-    if (position > 0) {
-        found <- TRUE
-    }
-    expect_equal(found, TRUE)
-})
-
-test_that("execute env vars", {
-    command <- "echo $ENV_TEST"
-    if (.Platform$OS.type == "windows") {
-        command <- "echo %ENV_TEST%"
-    }
+    it("valid exit code", {
+        output <- scriptexec::execute("exit 0")
+        expect_equal(output$status, 0)
+    })
     
-    output <- scriptexec::execute(command, env = c("ENV_TEST=MYENV"))
-    windows <- scriptexec::is_windows()
-    expect_equal(output$status, 0)
-    position <- regexpr("MYENV", output$output)
-    found <- FALSE
-    if (position > 0) {
-        found <- TRUE
-    }
-    expect_equal(found, !windows)
-})
-
-test_that("execute error exit code", {
-    output <- scriptexec::execute("exit 1")
-    expect_equal(output$status, 1)
+    it("valid command", {
+        output <- scriptexec::execute("dir")
+        expect_equal(output$status, 0)
+    })
+    
+    it("valid commands", {
+        output <- scriptexec::execute(c("dir", "cd", "dir"))
+        expect_equal(output$status, 0)
+    })
+    
+    it("cli arguments is NULL", {
+        output <- scriptexec::execute("exit 0", args = NULL)
+        expect_equal(output$status, 0)
+    })
+    
+    it("cli arguments", {
+        arg <- get_os_string("$ARG1", "%ARG1%")
+        
+        output <- scriptexec::execute(paste("echo", arg, sep = " "), c("TEST_R"))
+        expect_equal(output$status, 0)
+        
+        found <- is_string_exists("TEST_R", output$output)
+        expect_true(found)
+    })
+    
+    it("env vars", {
+        command <- get_os_string("echo $ENV_TEST", "echo %ENV_TEST%")
+        
+        output <- scriptexec::execute(command, env = c("ENV_TEST=MYENV"))
+        windows <- scriptexec::is_windows()
+        expect_equal(output$status, 0)
+        
+        found <- is_string_exists("MYENV", output$output)
+        expect_equal(found, !windows)
+    })
+    
+    it("error exit code", {
+        output <- scriptexec::execute("exit 1")
+        expect_equal(output$status, 1)
+    })
 })
