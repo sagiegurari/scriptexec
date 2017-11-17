@@ -1,4 +1,6 @@
 
+devtools::load_all(".")
+
 # regenerate documentation
 devtools::document()
 

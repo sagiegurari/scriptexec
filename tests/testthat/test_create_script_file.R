@@ -1,10 +1,10 @@
-context("create_temp_file")
+context("create_script_file")
 
-describe("create_temp_file", {
+describe("create_script_file", {
     source("helper.R")
     
     it("no text", {
-        filename <- scriptexec::create_temp_file()
+        filename <- scriptexec::create_script_file()
         extension <- get_os_string(".sh", ".bat")
         
         found <- is_string_exists(extension, filename)
@@ -15,7 +15,7 @@ describe("create_temp_file", {
     })
     
     it("text", {
-        filename <- scriptexec::create_temp_file("test123")
+        filename <- scriptexec::create_script_file("test123")
         extension <- get_os_string(".sh", ".bat")
         
         found <- is_string_exists(extension, filename)

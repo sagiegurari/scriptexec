@@ -62,27 +62,6 @@ modify_script <- function(script, args = c()) {
     paste(cd.line, args.lines, script.string, sep = "\n")
 }
 
-#' Creates a temporary file, writes the provided script content into it and returns the file name.
-#'
-#' @param script The script text
-#' @return The temporary file name
-#' @export
-#' @examples
-#' filename <- create_temp_file('echo test')
-create_temp_file <- function(script = "") {
-    extension <- get_platform_value(".sh", ".bat")
-    
-    # create a temporary file to store the script
-    filename <- tempfile("script_", fileext = extension)
-    
-    # write script to temprary file
-    fd <- file(filename)
-    writeLines(script, fd)
-    close(fd)
-    
-    filename
-}
-
 #' Returns the command and arguments needed to execute the provided script file on the current platform.
 #'
 #' @param filename The script file to execute
@@ -97,6 +76,27 @@ get_command <- function(filename) {
     args <- get_platform_value(c(filename), c("/C", filename))
     
     list(command = command, args = args)
+}
+
+#' Creates a temporary file, writes the provided script content into it and returns the file name.
+#'
+#' @param script The script text
+#' @return The temporary file name
+#' @export
+#' @examples
+#' filename <- create_script_file('echo test')
+create_script_file <- function(script = "") {
+    extension <- get_platform_value(".sh", ".bat")
+    
+    # create a temporary file to store the script
+    filename <- tempfile("script_", fileext = extension)
+    
+    # write script to temprary file
+    fd <- file(filename)
+    writeLines(script, fd)
+    close(fd)
+    
+    filename
 }
 
 #' Executes a script and returns the output.
@@ -129,7 +129,7 @@ execute <- function(script = "", args = c(), env = character()) {
     full.script <- modify_script(script = script, args = args)
     
     # create a temporary file to store the script
-    filename <- create_temp_file(full.script)
+    filename <- create_script_file(full.script)
     
     command_struct <- get_command(filename)
     command <- command_struct$command
