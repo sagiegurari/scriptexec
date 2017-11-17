@@ -4,6 +4,7 @@
 * Merge all output text instead of vector #5
 * Add status 0 instead of null #6
 * Pass env variables as part of script execution #7
+* add wait support #8
 * Export all functions #4
 * Add demos #3
 
