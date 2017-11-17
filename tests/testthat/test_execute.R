@@ -48,4 +48,14 @@ describe("execute", {
         expect_warning(output <- scriptexec::execute("exit 1"))
         expect_equal(output$status, 1)
     })
+    
+    it("no wait", {
+        output <- scriptexec::execute("dir", wait = FALSE)
+        expect_equal(output$status, -1)
+    })
+    
+    it("error exit code with no wait", {
+        output <- scriptexec::execute("exit 1", wait = FALSE)
+        expect_equal(output$status, -1)
+    })
 })

@@ -39,6 +39,9 @@ cat(sprintf("%s\n", output))
 output <- scriptexec::execute("exit 1")
 cat(sprintf("Status: %s\n", output$status))
 cat(sprintf("%s\n", output))
+
+#do not wait for command to finish
+execute('echo my really long task', wait = FALSE)
 ````
 
 <a name="installation"></a>

@@ -6,7 +6,7 @@
 The stdout and stderr are captured and returned.
 In case of errors, the exit code will return in the status field.}
 \usage{
-execute(script = "", args = c(), env = character())
+execute(script = "", args = c(), env = character(), wait = TRUE)
 }
 \arguments{
 \item{script}{The script text}
@@ -14,6 +14,8 @@ execute(script = "", args = c(), env = character())
 \item{args}{Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)}
 
 \item{env}{Optional character vector of name=value strings to set environment variables (not supported on windows)}
+
+\item{wait}{A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)}
 }
 \value{
 The script output, see system2 documentation
@@ -40,4 +42,7 @@ cat(sprintf('\%s\\n', output))
 output <- execute('exit 1')
 cat(sprintf('Status: \%s\\n', output$status))
 cat(sprintf('\%s\\n', output))
+
+#do not wait for command to finish
+execute('echo my really long task', wait = FALSE)
 }

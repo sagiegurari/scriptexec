@@ -87,26 +87,46 @@ describe("API Stability", {
             expect_equal(found, !windows)
         })
         
-        it("args and env vars as paramters", {
-            command <- get_os_string("echo $ARG1 $ENV_TEST", "echo %ARG1% %ENV_TEST%")
-            
-            output <- scriptexec::execute(command, "TEST_ARG", c("ENV_TEST=MYENV"))
-            windows <- scriptexec::is_windows()
-            expect_equal(output$status, 0)
-            
-            found <- is_string_exists("TEST_ARG MYENV", output$output)
-            expect_equal(found, !windows)
+        it("wait as forth parameter", {
+            output <- scriptexec::execute("exit 0", NULL, NULL, FALSE)
+            expect_equal(output$status, -1)
         })
         
-        it("args and env vars as named paramters", {
+        it("wait as named parameter", {
+            output <- scriptexec::execute("exit 0", wait = FALSE)
+            expect_equal(output$status, -1)
+        })
+        
+        it("all paramters", {
             command <- get_os_string("echo $ARG1 $ENV_TEST", "echo %ARG1% %ENV_TEST%")
             
-            output <- scriptexec::execute(command, args = "TEST_ARG", env = c("ENV_TEST=MYENV"))
+            output <- scriptexec::execute(command, "TEST_ARG", c("ENV_TEST=MYENV"), 
+                TRUE)
             windows <- scriptexec::is_windows()
             expect_equal(output$status, 0)
             
             found <- is_string_exists("TEST_ARG MYENV", output$output)
             expect_equal(found, !windows)
+            
+            output <- scriptexec::execute(command, "TEST_ARG", c("ENV_TEST=MYENV"), 
+                FALSE)
+            expect_equal(output$status, -1)
+        })
+        
+        it("all named paramters", {
+            command <- get_os_string("echo $ARG1 $ENV_TEST", "echo %ARG1% %ENV_TEST%")
+            
+            output <- scriptexec::execute(command, args = "TEST_ARG", env = c("ENV_TEST=MYENV"), 
+                wait = TRUE)
+            windows <- scriptexec::is_windows()
+            expect_equal(output$status, 0)
+            
+            found <- is_string_exists("TEST_ARG MYENV", output$output)
+            expect_equal(found, !windows)
+            
+            output <- scriptexec::execute(command, args = "TEST_ARG", env = c("ENV_TEST=MYENV"), 
+                wait = FALSE)
+            expect_equal(output$status, -1)
         })
     })
     
@@ -131,6 +151,10 @@ describe("API Stability", {
             # non zero status code is returned in case of errors
             expect_warning(output <- scriptexec::execute("exit 1"))
             expect_equal(output$status, 1)
+            
+            # do not wait for command to finish
+            output <- execute("echo my really long task", wait = FALSE)
+            expect_equal(output$status, -1)
         })
     })
 })

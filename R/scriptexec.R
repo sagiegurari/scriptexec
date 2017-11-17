@@ -106,6 +106,7 @@ create_script_file <- function(script = "") {
 #' @param script The script text
 #' @param args Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)
 #' @param env Optional character vector of name=value strings to set environment variables (not supported on windows)
+#' @param wait A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
 #' @return The script output, see system2 documentation
 #' @export
 #' @examples
@@ -125,7 +126,10 @@ create_script_file <- function(script = "") {
 #' output <- execute('exit 1')
 #' cat(sprintf('Status: %s\n', output$status))
 #' cat(sprintf('%s\n', output))
-execute <- function(script = "", args = c(), env = character()) {
+#'
+#' #do not wait for command to finish
+#' execute('echo my really long task', wait = FALSE)
+execute <- function(script = "", args = c(), env = character(), wait = TRUE) {
     full.script <- modify_script(script = script, args = args)
     
     # create a temporary file to store the script
@@ -135,11 +139,11 @@ execute <- function(script = "", args = c(), env = character()) {
     command <- command_struct$command
     cli_args <- command_struct$args
     
-    arg.list <- list(command = command, args = cli_args, stdout = TRUE, stderr = TRUE, 
-        stdin = "", input = NULL, env = env, wait = TRUE)
+    arg.list <- list(command = command, args = cli_args, stdout = wait, stderr = wait, 
+        stdin = "", input = NULL, env = env, wait = wait)
     windows <- is_windows()
     if (windows) {
-        c(list(minimized = TRUE, invisible = TRUE), arg.list)
+        arg.list <- c(list(minimized = TRUE, invisible = TRUE), arg.list)
     }
     
     output <- do.call(system2, arg.list)
@@ -147,7 +151,11 @@ execute <- function(script = "", args = c(), env = character()) {
     # get output
     status <- attr(output, "status")
     if (is.null(status)) {
-        status <- 0
+        if (wait) {
+            status <- 0
+        } else {
+            status <- -1
+        }
     }
     output.text <- paste(c(output), sep = "\n", collapse = "")
     
