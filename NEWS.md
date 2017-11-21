@@ -2,7 +2,7 @@
 
 ## 0.2.1
 
-* Added mac build support
+* Cleanups
 
 ## 0.2.0
 

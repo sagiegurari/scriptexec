@@ -4,9 +4,6 @@ r:
  - oldrel
  - release
  - devel
-os:
- - linux
- - osx
 before_script:
  - Rscript -e 'devtools::install_github("jimhester/covr")'
 after_success:

@@ -7,13 +7,11 @@
 * add wait support #8
 * Export all functions #4
 * Add demos #3
-* Added mac build support
 
 ## Test environments
 
 * local ubuntu install, R version 3.4.2 (2017-09-28)
 * linux (via travis) release, oldrel, devel
-* mac (via travis) release, oldrel, devel
 * windows (via appveyor) release, oldrel, devel
 * build_win
 
