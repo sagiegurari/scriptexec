@@ -7,6 +7,7 @@
 * add wait support #8
 * Export all functions #4
 * Add demos #3
+* Support custom runner #9
 
 ## Test environments
 

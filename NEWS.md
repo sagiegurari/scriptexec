@@ -2,7 +2,7 @@
 
 ## 0.2.1
 
-* Cleanups
+* Support custom runner #9
 
 ## 0.2.0
 
