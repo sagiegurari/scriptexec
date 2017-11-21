@@ -6,7 +6,8 @@
 The stdout and stderr are captured and returned.
 In case of errors, the exit code will return in the status field.}
 \usage{
-execute(script = "", args = c(), env = character(), wait = TRUE)
+execute(script = "", args = c(), env = character(), wait = TRUE,
+  runner = NULL)
 }
 \arguments{
 \item{script}{The script text}
@@ -16,6 +17,8 @@ execute(script = "", args = c(), env = character(), wait = TRUE)
 \item{env}{Optional character vector of name=value strings to set environment variables (not supported on windows)}
 
 \item{wait}{A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)}
+
+\item{runner}{The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)}
 }
 \value{
 The script output, see system2 documentation

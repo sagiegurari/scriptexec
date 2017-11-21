@@ -4,10 +4,12 @@
 \alias{get_command}
 \title{Returns the command and arguments needed to execute the provided script file on the current platform.}
 \usage{
-get_command(filename)
+get_command(filename, runner = NULL)
 }
 \arguments{
 \item{filename}{The script file to execute}
+
+\item{runner}{The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)}
 }
 \value{
 A list holding the command and arguments

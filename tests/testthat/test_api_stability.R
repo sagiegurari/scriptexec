@@ -24,7 +24,7 @@ describe("API Stability", {
             expect_equal(output$status, 1)
         })
         
-        it("args as second parameter as text", {
+        it("args as parameter 2 as text", {
             command <- get_os_string("echo $ARG1", "echo %ARG1%")
             
             output <- scriptexec::execute(command, "TEST_R")
@@ -34,7 +34,7 @@ describe("API Stability", {
             expect_true(found)
         })
         
-        it("args as second parameter as vector", {
+        it("args as parameter 2 as vector", {
             command <- get_os_string("echo $ARG1", "echo %ARG1%")
             
             output <- scriptexec::execute(command, c("TEST_R"))
@@ -54,7 +54,7 @@ describe("API Stability", {
             expect_true(found)
         })
         
-        it("env vars as third paramter as text", {
+        it("env vars as paramter 3 as text", {
             command <- get_os_string("echo $ENV_TEST", "echo %ENV_TEST%")
             
             output <- scriptexec::execute(command, NULL, "ENV_TEST=MYENV")
@@ -65,7 +65,7 @@ describe("API Stability", {
             expect_equal(found, !windows)
         })
         
-        it("env vars as third paramter as vector", {
+        it("env vars as paramter 3 as vector", {
             command <- get_os_string("echo $ENV_TEST", "echo %ENV_TEST%")
             
             output <- scriptexec::execute(command, NULL, c("ENV_TEST=MYENV"))
@@ -87,7 +87,7 @@ describe("API Stability", {
             expect_equal(found, !windows)
         })
         
-        it("wait as forth parameter", {
+        it("wait as parameter 4", {
             output <- scriptexec::execute("exit 0", NULL, NULL, FALSE)
             expect_equal(output$status, -1)
         })
@@ -97,11 +97,24 @@ describe("API Stability", {
             expect_equal(output$status, -1)
         })
         
+        it("runner as parameter 5", {
+            runner <- get_os_string("sh", "cmd.exe")
+            output <- scriptexec::execute("exit 0", NULL, NULL, TRUE, runner)
+            expect_equal(output$status, 0)
+        })
+        
+        it("runner as named parameter", {
+            runner <- get_os_string("sh", "cmd.exe")
+            output <- scriptexec::execute("exit 0", runner = runner)
+            expect_equal(output$status, 0)
+        })
+        
         it("all paramters", {
             command <- get_os_string("echo $ARG1 $ENV_TEST", "echo %ARG1% %ENV_TEST%")
+            runner <- get_os_string("sh", "cmd.exe")
             
             output <- scriptexec::execute(command, "TEST_ARG", c("ENV_TEST=MYENV"), 
-                TRUE)
+                TRUE, runner)
             windows <- scriptexec::is_windows()
             expect_equal(output$status, 0)
             
@@ -115,9 +128,10 @@ describe("API Stability", {
         
         it("all named paramters", {
             command <- get_os_string("echo $ARG1 $ENV_TEST", "echo %ARG1% %ENV_TEST%")
+            runner <- get_os_string("sh", "cmd.exe")
             
             output <- scriptexec::execute(command, args = "TEST_ARG", env = c("ENV_TEST=MYENV"), 
-                wait = TRUE)
+                wait = TRUE, runner = runner)
             windows <- scriptexec::is_windows()
             expect_equal(output$status, 0)
             

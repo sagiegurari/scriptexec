@@ -58,4 +58,10 @@ describe("execute", {
         output <- scriptexec::execute("exit 1", wait = FALSE)
         expect_equal(output$status, -1)
     })
+    
+    it("runner provided", {
+        runner <- get_os_string("sh", "cmd.exe")
+        output <- scriptexec::execute("dir", runner = runner)
+        expect_equal(output$status, 0)
+    })
 })

@@ -65,14 +65,20 @@ modify_script <- function(script, args = c()) {
 #' Returns the command and arguments needed to execute the provided script file on the current platform.
 #'
 #' @param filename The script file to execute
+#' @param runner The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
 #' @return A list holding the command and arguments
 #' @export
 #' @examples
 #' command_struct <- get_command('myfile.sh')
 #' command <- command_struct$command
 #' cli_args <- command_struct$args
-get_command <- function(filename) {
-    command <- get_platform_value("sh", "cmd.exe")
+get_command <- function(filename, runner = NULL) {
+    if (is.null(runner)) {
+        command <- get_platform_value("sh", "cmd.exe")
+    } else {
+        command <- runner
+    }
+    
     args <- get_platform_value(c(filename), c("/C", filename))
     
     list(command = command, args = args)
@@ -107,6 +113,7 @@ create_script_file <- function(script = "") {
 #' @param args Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)
 #' @param env Optional character vector of name=value strings to set environment variables (not supported on windows)
 #' @param wait A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
+#' @param runner The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
 #' @return The script output, see system2 documentation
 #' @export
 #' @examples
@@ -129,13 +136,13 @@ create_script_file <- function(script = "") {
 #'
 #' #do not wait for command to finish
 #' execute('echo my really long task', wait = FALSE)
-execute <- function(script = "", args = c(), env = character(), wait = TRUE) {
+execute <- function(script = "", args = c(), env = character(), wait = TRUE, runner = NULL) {
     full.script <- modify_script(script = script, args = args)
     
     # create a temporary file to store the script
     filename <- create_script_file(full.script)
     
-    command_struct <- get_command(filename)
+    command_struct <- get_command(filename, runner)
     command <- command_struct$command
     cli_args <- command_struct$args
     
