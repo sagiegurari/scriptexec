@@ -1,4 +1,8 @@
 
+# delete old files
+unlink("./man", recursive = TRUE)
+unlink("./NAMESPACE", recursive = TRUE)
+
 devtools::load_all(".")
 
 # regenerate documentation
@@ -18,3 +22,7 @@ devtools::test()
 
 # check package
 devtools::check()
+
+# used before release
+# devtools::build_win()
+# devtools::release()

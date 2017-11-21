@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1
+
+* Added mac build support
+
 ## 0.2.0
 
 * execute_script function renamed to execute
