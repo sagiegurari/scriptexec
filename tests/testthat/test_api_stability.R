@@ -151,8 +151,7 @@ describe("API Stability", {
             output <- scriptexec::execute(c("cd", "echo User Home:", "dir"))
             expect_equal(output$status, 0)
             
-            # pass arguments to the script, later defined as ARG1, ARG2, ...  and also pass
-            # some env vars
+            # pass arguments (later defined as ARG1, ARG2, ...) and env vars
             command <- get_os_string("echo $ARG1 $ARG2 $MYENV", "echo %ARG1% %ARG2% %MYENV%")
             output <- execute(command, args = c("TEST1", "TEST2"), env = c("MYENV=TEST3"))
             expect_equal(output$status, 0)

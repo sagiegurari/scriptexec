@@ -144,19 +144,19 @@ create_script_file <- function(script = "") {
 #' @return The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
 #' @export
 #' @examples
-#' #execute script text
+#' # execute script text
 #' output <- execute('echo Current Directory:\ndir')
 #' cat(sprintf('Exit Status: %s Output: %s\n', output$status, output$output))
 #'
-#' #execute multiple commands as a script
+#' # execute multiple commands as a script
 #' output <- execute(c('cd', 'echo User Home:', 'dir'))
 #' cat(sprintf('Exit Status: %s Output: %s\n', output$status, output$output))
 #'
-#' #pass arguments to the script, later defined as ARG1, ARG2, ...
-#' output <- execute('echo $ARG1 $ARG2', args = c('TEST1', 'TEST2'))
+#' # pass arguments (later defined as ARG1, ARG2, ...) and env vars
+#' output <- execute('echo $ARG1 $ARG2', args = c('TEST1', 'TEST2'), env = c('MYENV=TEST3'))
 #' cat(sprintf('%s\n', output))
 #'
-#' #non zero status code is returned in case of errors
+#' # non zero status code is returned in case of errors
 #' output <- execute('exit 1')
 #' cat(sprintf('Status: %s\n', output$status))
 #' cat(sprintf('%s\n', output))
