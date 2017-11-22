@@ -62,7 +62,7 @@ Argument      |Description
 
 ```r 
  filename <- create_script_file('echo test')
- 
+
 ``` 
 
 # `execute`
@@ -118,7 +118,7 @@ Argument      |Description
  cat(sprintf('Exit Status: %s Output: %s\n', output$status, output$output))
  
  # pass arguments (later defined as ARG1, ARG2, ...) and env vars
- output <- execute('echo $ARG1 $ARG2', args = c('TEST1', 'TEST2'), env = c("MYENV=TEST3"))
+ output <- execute('echo $ARG1 $ARG2', args = c('TEST1', 'TEST2'), env = c('MYENV=TEST3'))
  cat(sprintf('%s\n', output))
  
  # non zero status code is returned in case of errors
@@ -128,7 +128,7 @@ Argument      |Description
  
  #do not wait for command to finish
  execute('echo my really long task', wait = FALSE)
- 
+
 ``` 
 
 # `generate_env_setup_script`
@@ -167,7 +167,7 @@ Argument      |Description
 
 ```r 
  script <- generate_env_setup_script(c('ENV_TEST=MYENV'))
- 
+
 ``` 
 
 # `get_command`
@@ -209,7 +209,7 @@ Argument      |Description
  command_struct <- get_command('myfile.sh')
  command <- command_struct$command
  cli_args <- command_struct$args
- 
+
 ``` 
 
 # `get_platform_value`
@@ -249,7 +249,7 @@ Argument      |Description
 
 ```r 
  platform_value <- get_platform_value('.sh', '.bat')
- 
+
 ``` 
 
 # `is_windows`
@@ -282,7 +282,7 @@ is_windows()
 
 ```r 
  windows <- is_windows()
- 
+
 ``` 
 
 # `modify_script`
@@ -323,7 +323,7 @@ Argument      |Description
 
 ```r 
  script <- modify_script(script = 'echo test', args = c('first', 'second'), env = c('MYENV=MYENV'))
- 
+
 ``` 
 
 # `scriptexec`
