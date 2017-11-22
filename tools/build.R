@@ -1,12 +1,15 @@
 
 # delete old files
+unlink("./docs", recursive = TRUE)
 unlink("./man", recursive = TRUE)
 unlink("./NAMESPACE", recursive = TRUE)
 
 devtools::load_all(".")
 
 # regenerate documentation
+dir.create("./docs")
 devtools::document()
+Rd2md::ReferenceManual(".", outdir = "./docs", verbose=FALSE)    
 
 # format code
 format.config <- list(recursive = TRUE, indent = 4, arrow = TRUE, brace.newline = FALSE, blank = TRUE)
