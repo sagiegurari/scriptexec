@@ -4,12 +4,14 @@
 \alias{modify_script}
 \title{Modifies the provided script text and ensures the script content is executed in the correct location.}
 \usage{
-modify_script(script, args = c())
+modify_script(script, args = c(), env = character())
 }
 \arguments{
 \item{script}{The script text}
 
 \item{args}{Optional script command line arguments}
+
+\item{env}{Optional character vector of name=value strings to set environment variables}
 }
 \value{
 The modified script text
@@ -18,5 +20,5 @@ The modified script text
 Modifies the provided script text and ensures the script content is executed in the correct location.
 }
 \examples{
-full.script <- modify_script(script = 'echo test', args = c('first', 'second'))
+script <- modify_script(script = 'echo test', args = c('first', 'second'), env = c('MYENV=MYENV'))
 }

@@ -14,7 +14,7 @@ execute(script = "", args = c(), env = character(), wait = TRUE,
 
 \item{args}{Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)}
 
-\item{env}{Optional character vector of name=value strings to set environment variables (not supported on windows)}
+\item{env}{Optional character vector of name=value strings to set environment variables}
 
 \item{wait}{A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)}
 

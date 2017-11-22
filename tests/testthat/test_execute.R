@@ -37,11 +37,10 @@ describe("execute", {
         command <- get_os_string("echo $ENV_TEST", "echo %ENV_TEST%")
         
         output <- scriptexec::execute(command, env = c("ENV_TEST=MYENV"))
-        windows <- scriptexec::is_windows()
         expect_equal(output$status, 0)
         
         found <- is_string_exists("MYENV", output$output)
-        expect_equal(found, !windows)
+        expect_equal(found, TRUE)
     })
     
     it("error exit code", {

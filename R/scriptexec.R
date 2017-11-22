@@ -35,18 +35,45 @@ get_platform_value <- function(unix_value, windows_value) {
     output
 }
 
+#' Generates and returns a script which sets up the env vars for the script execution.
+#'
+#' @param env Optional character vector of name=value strings to set environment variables
+#' @return The script text which sets up the env
+#' @export
+#' @examples
+#' script <- generate_env_setup_script(c('ENV_TEST=MYENV'))
+generate_env_setup_script <- function(env = character()) {
+    lines <- c()
+    
+    prefix <- get_platform_value("export", "SET")
+    for (pair in env) {
+        line <- paste(prefix, pair, sep = " ")
+        lines <- c(lines, line)
+    }
+    
+    paste(lines, collapse = "\n")
+}
+
 #' Modifies the provided script text and ensures the script content is executed in the correct location.
 #'
 #' @param script The script text
 #' @param args Optional script command line arguments
+#' @param env Optional character vector of name=value strings to set environment variables
 #' @return The modified script text
 #' @export
 #' @examples
-#' full.script <- modify_script(script = 'echo test', args = c('first', 'second'))
-modify_script <- function(script, args = c()) {
+#' script <- modify_script(script = 'echo test', args = c('first', 'second'), env = c('MYENV=MYENV'))
+modify_script <- function(script, args = c(), env = character()) {
     # setup cd command
     cwd <- getwd()
     cd.line <- paste("cd", cwd, sep = " ")
+    
+    # setup env vars
+    windows <- is_windows()
+    env.line <- character()
+    if (windows) {
+        env.line <- generate_env_setup_script(env)
+    }
     
     # setup script arguments
     index <- 1
@@ -59,7 +86,7 @@ modify_script <- function(script, args = c()) {
     }
     
     script.string <- paste(script, collapse = "\n")
-    paste(cd.line, args.lines, script.string, sep = "\n")
+    paste(cd.line, env.line, args.lines, script.string, sep = "\n")
 }
 
 #' Returns the command and arguments needed to execute the provided script file on the current platform.
@@ -111,7 +138,7 @@ create_script_file <- function(script = "") {
 #'
 #' @param script The script text
 #' @param args Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)
-#' @param env Optional character vector of name=value strings to set environment variables (not supported on windows)
+#' @param env Optional character vector of name=value strings to set environment variables
 #' @param wait A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
 #' @param runner The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
 #' @return The script output, see system2 documentation
@@ -137,7 +164,7 @@ create_script_file <- function(script = "") {
 #' #do not wait for command to finish
 #' execute('echo my really long task', wait = FALSE)
 execute <- function(script = "", args = c(), env = character(), wait = TRUE, runner = NULL) {
-    full.script <- modify_script(script = script, args = args)
+    full.script <- modify_script(script = script, args = args, env = env)
     
     # create a temporary file to store the script
     filename <- create_script_file(full.script)

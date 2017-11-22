@@ -3,6 +3,7 @@
 ## 0.2.1
 
 * Support custom runner #9
+* support env vars for windows platform #11
 
 ## 0.2.0
 

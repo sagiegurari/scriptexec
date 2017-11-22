@@ -8,6 +8,7 @@
 * Export all functions #4
 * Add demos #3
 * Support custom runner #9
+* support env vars for windows platform #11
 
 ## Test environments
 
@@ -18,12 +19,7 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-checking CRAN incoming feasibility ... NOTE
-Maintainer: ‘Sagie Gur-Ari <sagiegurari@gmail.com>’
-
-Days since last update: 2
+0 errors | 0 warnings | 0 notes
 
 ## Reverse dependencies
 

@@ -21,38 +21,42 @@ The purpose of the scriptexec package is to enable quick and easy way to execute
 Simply load the library and invoke the execute
 
 ````r
-library(scriptexec)
-
-#execute script text
 output <- scriptexec::execute("echo Current Directory:\ndir")
 cat(sprintf("Exit Status: %s Output: %s\n", output$status, output$output))
 
-#execute multiple commands as a script
+# execute multiple commands as a script
 output <- scriptexec::execute(c("cd", "echo User Home:", "dir"))
 cat(sprintf("Exit Status: %s Output: %s\n", output$status, output$output))
 
-#pass arguments to the script, later defined as ARG1, ARG2, ...
-output <- execute("echo $ARG1 $ARG2", args = c("TEST1", "TEST2"))
+# pass arguments to the script, later defined as ARG1, ARG2, ...
+# and also pass some env vars
+output <- execute("echo $ARG1 $ARG2 $MYENV", args = c("TEST1", "TEST2"), env = c("MYENV=TEST3"))
 cat(sprintf("%s\n", output))
 
-#non zero status code is returned in case of errors
+# non zero status code is returned in case of errors
 output <- scriptexec::execute("exit 1")
 cat(sprintf("Status: %s\n", output$status))
 cat(sprintf("%s\n", output))
 
-#do not wait for command to finish
+# do not wait for command to finish
 execute('echo my really long task', wait = FALSE)
 ````
 
 <a name="installation"></a>
 ## Installation
-In order to use this library, run the following command:
+Install latest release from github (recommanded):
+
+```r
+devtools::install_github("sagiegurari/scriptexec@0.2.0")
+```
+
+Install from CRAN (might be older, depending on CRAN team approval process)
 
 ```r
 install.packages("scriptexec")
 ```
 
-Or install latest version from github:
+Install current development version from github (might be unstable):
 
 ```r
 devtools::install_github("sagiegurari/scriptexec")
