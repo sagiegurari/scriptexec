@@ -9,6 +9,7 @@
 * Add demos #3
 * Support custom runner #9
 * support env vars for windows platform #11
+* markdown documentation hosted on github #10
 
 ## Test environments
 

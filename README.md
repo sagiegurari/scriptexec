@@ -7,7 +7,7 @@
 * [Overview](#overview)
 * [Usage](#usage)
 * [Installation](#installation)
-* [API Documentation](http://www.rdocumentation.org/packages/scriptexec)
+* [API Documentation](docs/api.md)
 * [Contributing](.github/CONTRIBUTING.md)
 * [Release History](NEWS.md)
 * [License](#license)
@@ -63,7 +63,7 @@ devtools::install_github("sagiegurari/scriptexec")
 ```
 
 ## API Documentation
-See full docs at: [API Docs](http://www.rdocumentation.org/packages/scriptexec)
+See full docs at: [API Docs](docs/api.md)
 
 ## Contributing
 See [contributing guide](.github/CONTRIBUTING.md)

@@ -21,7 +21,7 @@ execute(script = "", args = c(), env = character(), wait = TRUE,
 \item{runner}{The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)}
 }
 \value{
-The script output, see system2 documentation
+The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
 }
 \description{
 Executes a script and returns the output.

@@ -7,5 +7,6 @@
 ^appveyor\.yml
 cran-comments\.md
 ^\.github
+^docs
 LICENSE
 temp

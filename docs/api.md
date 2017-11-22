@@ -6,6 +6,7 @@ November 22, 2017
 
 # DESCRIPTION
 
+
 ```
 Package: scriptexec
 Title: Execute Native Scripts
@@ -21,7 +22,8 @@ RoxygenNote: 6.0.1
 Suggests: knitr,
     rmarkdown,
     testthat
-VignetteBuilder: knitr```
+VignetteBuilder: knitr
+```
 
 
 # `create_script_file`
@@ -36,8 +38,10 @@ Creates a temporary file, writes the provided script content into it and returns
 
 ## Usage
 
+
 ```r
 create_script_file(script = "")
+
 ```
 
 
@@ -55,9 +59,11 @@ Argument      |Description
 
 ## Examples
 
+
 ```r 
  filename <- create_script_file('echo test')
- ``` 
+ 
+``` 
 
 # `execute`
 
@@ -75,9 +81,11 @@ Executes a script and returns the output.
 
 ## Usage
 
+
 ```r
 execute(script = "", args = c(), env = character(), wait = TRUE,
   runner = NULL)
+
 ```
 
 
@@ -94,10 +102,11 @@ Argument      |Description
 ## Value
 
 
- The script output, see system2 documentation
+ The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
 
 
 ## Examples
+
 
 ```r 
  #execute script text
@@ -119,7 +128,8 @@ Argument      |Description
  
  #do not wait for command to finish
  execute('echo my really long task', wait = FALSE)
- ``` 
+ 
+``` 
 
 # `generate_env_setup_script`
 
@@ -133,8 +143,10 @@ Generates and returns a script which sets up the env vars for the script executi
 
 ## Usage
 
+
 ```r
 generate_env_setup_script(env = character())
+
 ```
 
 
@@ -152,9 +164,11 @@ Argument      |Description
 
 ## Examples
 
+
 ```r 
  script <- generate_env_setup_script(c('ENV_TEST=MYENV'))
- ``` 
+ 
+``` 
 
 # `get_command`
 
@@ -168,8 +182,10 @@ Returns the command and arguments needed to execute the provided script file on 
 
 ## Usage
 
+
 ```r
 get_command(filename, runner = NULL)
+
 ```
 
 
@@ -188,11 +204,13 @@ Argument      |Description
 
 ## Examples
 
+
 ```r 
  command_struct <- get_command('myfile.sh')
  command <- command_struct$command
  cli_args <- command_struct$args
- ``` 
+ 
+``` 
 
 # `get_platform_value`
 
@@ -206,8 +224,10 @@ Returns the value based on the current platform.
 
 ## Usage
 
+
 ```r
 get_platform_value(unix_value, windows_value)
+
 ```
 
 
@@ -226,9 +246,11 @@ Argument      |Description
 
 ## Examples
 
+
 ```r 
  platform_value <- get_platform_value('.sh', '.bat')
- ``` 
+ 
+``` 
 
 # `is_windows`
 
@@ -242,8 +264,10 @@ Returns true if windows, else false.
 
 ## Usage
 
+
 ```r
 is_windows()
+
 ```
 
 
@@ -255,9 +279,11 @@ is_windows()
 
 ## Examples
 
+
 ```r 
  windows <- is_windows()
- ``` 
+ 
+``` 
 
 # `modify_script`
 
@@ -271,8 +297,10 @@ Modifies the provided script text and ensures the script content is executed in 
 
 ## Usage
 
+
 ```r
 modify_script(script, args = c(), env = character())
+
 ```
 
 
@@ -292,9 +320,11 @@ Argument      |Description
 
 ## Examples
 
+
 ```r 
  script <- modify_script(script = 'echo test', args = c('first', 'second'), env = c('MYENV=MYENV'))
- ``` 
+ 
+``` 
 
 # `scriptexec`
 

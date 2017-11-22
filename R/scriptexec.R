@@ -141,7 +141,7 @@ create_script_file <- function(script = "") {
 #' @param env Optional character vector of name=value strings to set environment variables
 #' @param wait A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
 #' @param runner The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
-#' @return The script output, see system2 documentation
+#' @return The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
 #' @export
 #' @examples
 #' #execute script text
