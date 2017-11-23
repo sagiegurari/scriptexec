@@ -64,10 +64,6 @@ describe("execute", {
         expect_equal(output$status, 0)
     })
     
-    it("error during invocation", {
-        expect_error(scriptexec::execute("badcommand"))
-    })
-    
     it("print_commands", {
         output <- scriptexec::execute("dir", print_commands = TRUE)
         expect_equal(output$status, 0)
