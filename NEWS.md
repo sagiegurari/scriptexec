@@ -4,6 +4,7 @@
 
 * Support custom runner #9
 * support env vars for windows platform #11
+* support flag to print every command before invocation #12
 * markdown documentation hosted on github #10
 
 ## 0.2.0

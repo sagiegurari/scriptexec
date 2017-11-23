@@ -7,7 +7,7 @@ The stdout and stderr are captured and returned.
 In case of errors, the exit code will return in the status field.}
 \usage{
 execute(script = "", args = c(), env = character(), wait = TRUE,
-  runner = NULL)
+  runner = NULL, print_commands = FALSE)
 }
 \arguments{
 \item{script}{The script text}
@@ -19,6 +19,8 @@ execute(script = "", args = c(), env = character(), wait = TRUE,
 \item{wait}{A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)}
 
 \item{runner}{The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)}
+
+\item{print_commands}{True if to print each command before invcation (not available for windows)}
 }
 \value{
 The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)

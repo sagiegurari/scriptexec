@@ -106,12 +106,22 @@ describe("API Stability", {
             expect_equal(output$status, 0)
         })
         
+        it("print_commands as parameter 6", {
+            output <- scriptexec::execute("exit 0", NULL, NULL, TRUE, NULL, TRUE)
+            expect_equal(output$status, 0)
+        })
+        
+        it("print_commands as named parameter", {
+            output <- scriptexec::execute("exit 0", print_commands = TRUE)
+            expect_equal(output$status, 0)
+        })
+        
         it("all paramters", {
             command <- get_os_string("echo $ARG1 $ENV_TEST", "echo %ARG1% %ENV_TEST%")
             runner <- get_os_string("sh", "cmd.exe")
             
             output <- scriptexec::execute(command, "TEST_ARG", c("ENV_TEST=MYENV"), 
-                TRUE, runner)
+                TRUE, runner, TRUE)
             expect_equal(output$status, 0)
             
             found <- is_string_exists("TEST_ARG MYENV", output$output)
@@ -127,7 +137,7 @@ describe("API Stability", {
             runner <- get_os_string("sh", "cmd.exe")
             
             output <- scriptexec::execute(command, args = "TEST_ARG", env = c("ENV_TEST=MYENV"), 
-                wait = TRUE, runner = runner)
+                wait = TRUE, runner = runner, print_commands = TRUE)
             expect_equal(output$status, 0)
             
             found <- is_string_exists("TEST_ARG MYENV", output$output)

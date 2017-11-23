@@ -4,7 +4,8 @@
 \alias{modify_script}
 \title{Modifies the provided script text and ensures the script content is executed in the correct location.}
 \usage{
-modify_script(script, args = c(), env = character())
+modify_script(script, args = c(), env = character(),
+  print_commands = FALSE)
 }
 \arguments{
 \item{script}{The script text}
@@ -12,6 +13,8 @@ modify_script(script, args = c(), env = character())
 \item{args}{Optional script command line arguments}
 
 \item{env}{Optional character vector of name=value strings to set environment variables}
+
+\item{print_commands}{True if to print each command before invcation (not available for windows)}
 }
 \value{
 The modified script text

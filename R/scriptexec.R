@@ -59,34 +59,40 @@ generate_env_setup_script <- function(env = character()) {
 #' @param script The script text
 #' @param args Optional script command line arguments
 #' @param env Optional character vector of name=value strings to set environment variables
+#' @param print_commands True if to print each command before invcation (not available for windows)
 #' @return The modified script text
 #' @export
 #' @examples
 #' script <- modify_script(script = 'echo test', args = c('first', 'second'), env = c('MYENV=MYENV'))
-modify_script <- function(script, args = c(), env = character()) {
+modify_script <- function(script, args = c(), env = character(), print_commands = FALSE) {
+    windows <- is_windows()
+    initial_commands <- ""
+    if (!windows && print_commands) {
+        initial_commands <- "set -x"
+    }
+    
     # setup cd command
     cwd <- getwd()
-    cd.line <- paste("cd", cwd, sep = " ")
+    cd_line <- paste("cd", cwd, sep = " ")
     
     # setup env vars
-    windows <- is_windows()
-    env.line <- character()
+    env_line <- character()
     if (windows) {
-        env.line <- generate_env_setup_script(env)
+        env_line <- generate_env_setup_script(env)
     }
     
     # setup script arguments
     index <- 1
-    var.prefix <- get_platform_value("ARG", "SET ARG")
-    args.lines <- c()
+    var_prefix <- get_platform_value("ARG", "SET ARG")
+    args_lines <- c()
     for (arg in args) {
-        args.line <- paste(var.prefix, index, "=", arg, sep = "")
-        args.lines <- c(args.lines, args.line)
+        args_line <- paste(var_prefix, index, "=", arg, sep = "")
+        args_lines <- c(args_lines, args_line)
         index <- index + 1
     }
     
-    script.string <- paste(script, collapse = "\n")
-    paste(cd.line, env.line, args.lines, script.string, sep = "\n")
+    script_string <- paste(script, collapse = "\n")
+    paste(initial_commands, cd_line, env_line, args_lines, script_string, sep = "\n")
 }
 
 #' Returns the command and arguments needed to execute the provided script file on the current platform.
@@ -141,6 +147,7 @@ create_script_file <- function(script = "") {
 #' @param env Optional character vector of name=value strings to set environment variables
 #' @param wait A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
 #' @param runner The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
+#' @param print_commands True if to print each command before invcation (not available for windows)
 #' @return The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
 #' @export
 #' @examples
@@ -163,24 +170,25 @@ create_script_file <- function(script = "") {
 #'
 #' #do not wait for command to finish
 #' execute('echo my really long task', wait = FALSE)
-execute <- function(script = "", args = c(), env = character(), wait = TRUE, runner = NULL) {
-    full.script <- modify_script(script = script, args = args, env = env)
+execute <- function(script = "", args = c(), env = character(), wait = TRUE, runner = NULL, 
+    print_commands = FALSE) {
+    full_script <- modify_script(script = script, args = args, env = env, print_commands = print_commands)
     
     # create a temporary file to store the script
-    filename <- create_script_file(full.script)
+    filename <- create_script_file(full_script)
     
     command_struct <- get_command(filename, runner)
     command <- command_struct$command
     cli_args <- command_struct$args
     
-    arg.list <- list(command = command, args = cli_args, stdout = wait, stderr = wait, 
+    arg_list <- list(command = command, args = cli_args, stdout = wait, stderr = wait, 
         stdin = "", input = NULL, env = env, wait = wait)
     windows <- is_windows()
     if (windows) {
-        arg.list <- c(list(minimized = TRUE, invisible = TRUE), arg.list)
+        arg_list <- c(list(minimized = TRUE, invisible = TRUE), arg_list)
     }
     
-    output <- do.call(system2, arg.list)
+    output <- do.call(system2, arg_list)
     
     # get output
     status <- attr(output, "status")
@@ -191,7 +199,7 @@ execute <- function(script = "", args = c(), env = character(), wait = TRUE, run
             status <- -1
         }
     }
-    output.text <- paste(c(output), sep = "\n", collapse = "")
+    output_text <- paste(c(output), sep = "\n", collapse = "")
     
-    list(status = status, output = output.text)
+    list(status = status, output = output_text)
 }

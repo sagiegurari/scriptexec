@@ -24,4 +24,13 @@ describe("modify_script", {
         found <- is_string_exists("ARG3", script)
         expect_false(found)
     })
+    
+    it("print_commands", {
+        script <- scriptexec::modify_script("", print_commands = TRUE)
+        script <- paste(script, collapse = "\n")
+        
+        command <- get_os_string("set -x", "")
+        found <- is_string_exists(command, script)
+        expect_true(found, TRUE)
+    })
 })
