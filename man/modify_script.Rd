@@ -14,7 +14,7 @@ modify_script(script, args = c(), env = character(),
 
 \item{env}{Optional character vector of name=value strings to set environment variables}
 
-\item{print_commands}{True if to print each command before invcation (not available for windows)}
+\item{print_commands}{True if to print each command before invocation (not available for windows)}
 }
 \value{
 The modified script text

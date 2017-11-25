@@ -98,7 +98,7 @@ Argument      |Description
 `env`     |     Optional character vector of name=value strings to set environment variables
 `wait`     |     A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
 `runner`     |     The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
-`print_commands`     |     True if to print each command before invcation (not available for windows)
+`print_commands`     |     True if to print each command before invocation (not available for windows)
 
 ## Value
 
@@ -313,7 +313,7 @@ Argument      |Description
 `script`     |     The script text
 `args`     |     Optional script command line arguments
 `env`     |     Optional character vector of name=value strings to set environment variables
-`print_commands`     |     True if to print each command before invcation (not available for windows)
+`print_commands`     |     True if to print each command before invocation (not available for windows)
 
 ## Value
 

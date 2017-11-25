@@ -20,7 +20,7 @@ execute(script = "", args = c(), env = character(), wait = TRUE,
 
 \item{runner}{The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)}
 
-\item{print_commands}{True if to print each command before invcation (not available for windows)}
+\item{print_commands}{True if to print each command before invocation (not available for windows)}
 }
 \value{
 The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
