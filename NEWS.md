@@ -6,6 +6,7 @@
 * support env vars for windows platform #11
 * support flag to print every command before invocation #12
 * markdown documentation hosted on github #10
+* Consistent error handling for all platforms
 
 ## 0.2.0
 
