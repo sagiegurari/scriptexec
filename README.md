@@ -47,7 +47,7 @@ execute('echo my really long task', wait = FALSE)
 Install latest release from github (recommanded):
 
 ```r
-devtools::install_github("sagiegurari/scriptexec@0.2.0")
+devtools::install_github("sagiegurari/scriptexec@0.2.1")
 ```
 
 Install from CRAN (might be older, depending on CRAN team approval process)
