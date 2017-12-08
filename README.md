@@ -1,7 +1,7 @@
 # scriptexec
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/scriptexec)](https://cran.r-project.org/package=scriptexec) [![GitHub release](https://img.shields.io/github/release/sagiegurari/scriptexec.svg)](https://github.com/sagiegurari/scriptexec/releases) [![Build Status](https://travis-ci.org/sagiegurari/scriptexec.svg)](http://travis-ci.org/sagiegurari/scriptexec) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/sagiegurari/scriptexec?branch=master&svg=true)](https://ci.appveyor.com/project/sagiegurari/scriptexec) [![codecov](https://codecov.io/gh/sagiegurari/scriptexec/branch/master/graph/badge.svg)](https://codecov.io/gh/sagiegurari/scriptexec)<br>
-[![License](https://img.shields.io/cran/l/scriptexec.svg)](https://github.com/sagiegurari/scriptexec/blob/master/LICENSE) [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/scriptexec)](https://github.com/sagiegurari/scriptexec/releases)
+[![License](https://img.shields.io/cran/l/scriptexec.svg)](https://github.com/sagiegurari/scriptexec/blob/master/LICENSE) [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/scriptexec)](https://github.com/sagiegurari/scriptexec/releases) [![Rdoc](http://www.rdocumentation.org/badges/version/scriptexec)](http://www.rdocumentation.org/packages/scriptexec)
 
 > Run complex native scripts with a single command, similar to system commands.
 
