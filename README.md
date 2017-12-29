@@ -45,16 +45,16 @@ execute("echo my really long task", wait = FALSE)
 
 <a name="installation"></a>
 ## Installation
-Install latest release from github (recommanded):
-
-```r
-devtools::install_github("sagiegurari/scriptexec@0.2.1")
-```
-
-Install from CRAN (might be older, depending on CRAN team approval process)
+Install from CRAN:
 
 ```r
 install.packages("scriptexec")
+```
+
+Install latest release from github:
+
+```r
+devtools::install_github("sagiegurari/scriptexec@0.2.1")
 ```
 
 Install current development version from github (might be unstable):
