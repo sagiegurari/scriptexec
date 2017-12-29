@@ -29,6 +29,10 @@ environment:
   - R_VERSION: devel
     PKGTYPE: source
 
+matrix:
+  allow_failures:
+    - R_VERSION: devel
+
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh github_package jimhester/covr
