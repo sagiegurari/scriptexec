@@ -1,6 +1,6 @@
 ## Comments
 
-* packrat integration #14
+* packrat integration to enable easier collaboration #14
 
 ## Test environments
 

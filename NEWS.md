@@ -2,7 +2,7 @@
 
 ## 0.2.2
 
-* packrat integration #14
+* packrat integration to enable easier collaboration #14
 
 ## 0.2.1
 
