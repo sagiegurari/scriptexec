@@ -2,7 +2,7 @@
 
 <!-- toc -->
 
-March 20, 2018
+September 25, 2018
 
 # DESCRIPTION
 
@@ -18,7 +18,7 @@ URL: https://github.com/sagiegurari/scriptexec
 BugReports: https://github.com/sagiegurari/scriptexec/issues
 Depends: R (>= 3.2.3)
 Encoding: UTF-8
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown,
     testthat

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.2
+
+* packrat integration #14
+
 ## 0.2.1
 
 * Support custom runner #9
