@@ -2,7 +2,7 @@
 
 <!-- toc -->
 
-September 25, 2018
+September 30, 2018
 
 # DESCRIPTION
 
@@ -10,7 +10,7 @@ September 25, 2018
 ```
 Package: scriptexec
 Title: Execute Native Scripts
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: person("Sagie", "Gur-Ari", email = "sagiegurari@gmail.com", role = c("aut", "cre"))
 Description: Run complex native scripts with a single command, similar to system commands.
 License: Apache License 2.0
