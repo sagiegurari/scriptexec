@@ -19,6 +19,43 @@ load <- function() {
     devtools::load_all(".")
 }
 
+get_description_doc <- function(text) {
+    print("[build] Extrating Description Documention.")
+    
+    doc <- c()
+    for (line in text) {
+        if (startsWith(x = line, prefix = "# `")) {
+            break
+        }
+        
+        doc <- c(doc, line)
+    }
+    
+    doc
+}
+
+get_function_api_doc <- function(name, text) {
+    print(sprintf("[build] Extrating Function Documention: %s", name))
+    
+    doc <- c()
+    prefix <- paste("# `", name, "`", sep = "")
+    started <- FALSE
+    for (line in text) {
+        if (started) {
+            if (startsWith(x = line, prefix = "# `")) {
+                break
+            }
+            
+            doc <- c(doc, line)
+        } else if (startsWith(x = line, prefix = prefix)) {
+            started <- TRUE
+            doc <- c(doc, line)
+        }
+    }
+    
+    doc
+}
+
 generate_docs <- function() {
     # generate documentation
     print("[build] Generating Documentation")
@@ -36,6 +73,11 @@ generate_docs <- function() {
     api.doc <- gsub(pattern = "[ \t]+\n", replace = "\n", x = api.doc)
     api.doc <- gsub(pattern = "\n\n", replace = "\n", x = api.doc)
     
+    description.doc <- get_description_doc(api.doc)
+    function.doc <- get_function_api_doc(name = "execute", text = api.doc)
+    api.doc <- c(description.doc, function.doc)
+    
+    print("[build] Writing API markdown")
     writeLines(api.doc, con = api.doc.file)
 }
 
@@ -96,12 +138,12 @@ if (length(args) > 0) {
     flow.name <- args[1]
 }
 
-print(paste("[build] Build Flow:", flow.name, sep = " "))
+sprintf("[build] Build Flow: %s", flow.name)
 
 flow <- flows[[flow.name]]
 
 if (is.null(flow)) {
-    print(paste("[build] Unknown flow:", flow.name, sep = " "))
+    sprintf("[build] Unsupported Build Flow: %s", flow.name)
 } else {
     for (step in flow) {
         step()
