@@ -7,7 +7,7 @@
 
 ## Test environments
 
-* local raspberry pi install, R version 3.4.2 (2017-09-28)
+* local raspberry pi install, R version 3.5.1 (2018-07-02)
 * linux (via travis) release, oldrel, devel
 * windows (via appveyor) release, oldrel, devel
 * build_win

@@ -20,7 +20,6 @@ Depends: R (>= 3.2.3)
 Encoding: UTF-8
 RoxygenNote: 6.1.0
 Suggests: knitr,
-    rmarkdown,
     testthat
 VignetteBuilder: knitr
 ```
