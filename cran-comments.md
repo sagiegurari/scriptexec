@@ -1,6 +1,8 @@
 ## Comments
 
 * packrat integration to enable easier collaboration #14
+* generate readme dynamically #17
+* document only execute api in generated docs #15
 
 ## Test environments
 

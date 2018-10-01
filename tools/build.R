@@ -12,6 +12,7 @@ cleanup <- function() {
     unlink("./docs", recursive = TRUE)
     unlink("./man", recursive = TRUE)
     unlink("./NAMESPACE", recursive = TRUE)
+    unlink("./README.md", recursive = TRUE)
 }
 
 load <- function() {
@@ -56,6 +57,79 @@ get_function_api_doc <- function(name, text) {
     doc
 }
 
+read_package_value <- function(name) {
+    text <- readLines("./DESCRIPTION")
+    
+    value <- ""
+    prefix <- paste(name, ": ", sep = "")
+    for (line in text) {
+        if (startsWith(x = line, prefix = prefix)) {
+            value <- gsub(pattern = prefix, replace = "", x = line)
+            value <- gsub(pattern = "^\\s+|\\s+$", replace = "", x = value)
+            break
+        }
+    }
+    
+    value
+}
+
+read_example_code <- function(name) {
+    file.name <- paste("./vignettes/", name, ".Rmd", sep = "")
+    text <- readLines(file.name)
+    
+    code <- c()
+    prefix <- paste("library(", name, ")", sep = "")
+    started <- FALSE
+    for (line in text) {
+        line <- gsub(pattern = "^\\s+|\\s+$", replace = "", x = line)
+        
+        if (started) {
+            if (startsWith(x = line, prefix = "```")) {
+                break
+            }
+            
+            code <- c(code, line)
+        } else if (startsWith(x = line, prefix = prefix)) {
+            started <- TRUE
+            code <- c(code, line)
+        }
+    }
+    
+    code
+}
+
+generate_readme <- function() {
+    print("[build] Generating README")
+    
+    template.doc <- readLines("./tools/README-template.md")
+    package.name <- read_package_value("Package")
+    version <- read_package_value("Version")
+    description <- read_package_value("Description")
+    
+    template.doc <- gsub(pattern = "{package.version}", replace = version, x = template.doc, 
+        fixed = TRUE)
+    template.doc <- gsub(pattern = "{package.name}", replace = package.name, x = template.doc, 
+        fixed = TRUE)
+    template.doc <- gsub(pattern = "{package.description}", replace = description, 
+        x = template.doc, fixed = TRUE)
+    
+    code <- read_example_code(package.name)
+    code <- c("```r", code, "```")
+    code <- paste(code, sep = "\n")
+    
+    template.doc.parts <- c()
+    for (line in template.doc) {
+        if (startsWith(x = line, prefix = "{package.example.code}")) {
+            template.doc.parts <- c(template.doc.parts, code)
+        } else {
+            template.doc.parts <- c(template.doc.parts, line)
+        }
+    }
+    template.doc <- paste(template.doc.parts, sep = "")
+    
+    writeLines(template.doc, con = "./README.md")
+}
+
 generate_docs <- function() {
     # generate documentation
     print("[build] Generating Documentation")
@@ -79,6 +153,8 @@ generate_docs <- function() {
     
     print("[build] Writing API markdown")
     writeLines(api.doc, con = api.doc.file)
+    
+    generate_readme()
 }
 
 format <- function() {
