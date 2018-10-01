@@ -191,16 +191,12 @@ build <- function() {
 
 # used before release
 build_windows <- function() {
-    if (exists("build_win", mode = "environment")) {
-        print("[build] Running Windows Build")
-        devtools::build_win()
-    }
+    print("[build] Running Windows Build")
+    devtools::build_win()
 }
 release <- function() {
-    if (exists("release", mode = "environment")) {
-        print("[build] Releasing New Version")
-        devtools::release()
-    }
+    print("[build] Releasing New Version")
+    devtools::release()
 }
 
 format_flow <- c(setup_env, cleanup, format)
