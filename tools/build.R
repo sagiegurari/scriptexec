@@ -189,11 +189,11 @@ build <- function() {
     devtools::check()
 }
 
-# used before release
 build_windows <- function() {
     print("[build] Running Windows Build")
     devtools::build_win()
 }
+
 release <- function() {
     print("[build] Releasing New Version")
     devtools::release()
