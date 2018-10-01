@@ -2,6 +2,7 @@
 
 ## 0.2.2
 
+* output executed script #16
 * packrat integration to enable easier collaboration #14
 * generate readme dynamically #17
 * document only execute api in generated docs #15
