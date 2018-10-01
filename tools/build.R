@@ -119,6 +119,9 @@ generate_readme <- function() {
     
     template.doc.parts <- c()
     for (line in template.doc) {
+        # trim line
+        line <- gsub(pattern = "^\\s+|\\s+$", replace = "", x = line)
+        
         if (startsWith(x = line, prefix = "{package.example.code}")) {
             template.doc.parts <- c(template.doc.parts, code)
         } else {

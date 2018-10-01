@@ -14,7 +14,7 @@
 * [License](#license)
 
 <a name="overview"></a>
- ## Overview
+## Overview
 The purpose of the {package.name} package is to enable quick and easy way to execute native scripts.
 
 <a name="usage"></a>
