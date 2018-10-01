@@ -40,7 +40,7 @@ describe("execute", {
         expect_equal(output$status, 0)
         
         found <- is_string_exists("MYENV", output$output)
-        expect_equal(found, TRUE)
+        expect_true(found)
     })
     
     it("error exit code", {
@@ -72,5 +72,24 @@ describe("execute", {
     it("error during invocation", {
         output <- scriptexec::execute("badcommand")
         expect_equal(output$status, 1)
+    })
+    
+    describe("execute", {
+        it("default", {
+            output <- scriptexec::execute("dir")
+            expect_true(is.null(output$script))
+        })
+        
+        it("FALSE", {
+            output <- scriptexec::execute("dir", get_runtime_script = FALSE)
+            expect_true(is.null(output$script))
+        })
+        
+        it("TRUE", {
+            output <- scriptexec::execute("dir", get_runtime_script = TRUE)
+            expect_false(is.null(output$script))
+            found <- is_string_exists("dir", output$script)
+            expect_true(found)
+        })
     })
 })

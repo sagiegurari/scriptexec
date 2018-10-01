@@ -21,7 +21,7 @@ load <- function() {
 }
 
 get_description_doc <- function(text) {
-    print("[build] Extrating Description Documention.")
+    print("[build] Extrating Description Documention")
     
     doc <- c()
     for (line in text) {
@@ -74,8 +74,8 @@ read_package_value <- function(name) {
 }
 
 read_example_code <- function(name) {
-    file.name <- paste("./vignettes/", name, ".Rmd", sep = "")
-    text <- readLines(file.name)
+    file_name <- paste("./vignettes/", name, ".Rmd", sep = "")
+    text <- readLines(file_name)
     
     code <- c()
     prefix <- paste("library(", name, ")", sep = "")
@@ -101,36 +101,36 @@ read_example_code <- function(name) {
 generate_readme <- function() {
     print("[build] Generating README")
     
-    template.doc <- readLines("./tools/README-template.md")
-    package.name <- read_package_value("Package")
+    template_doc <- readLines("./tools/README-template.md")
+    package_name <- read_package_value("Package")
     version <- read_package_value("Version")
     description <- read_package_value("Description")
     
-    template.doc <- gsub(pattern = "{package.version}", replace = version, x = template.doc, 
+    template_doc <- gsub(pattern = "{package.version}", replace = version, x = template_doc, 
         fixed = TRUE)
-    template.doc <- gsub(pattern = "{package.name}", replace = package.name, x = template.doc, 
+    template_doc <- gsub(pattern = "{package.name}", replace = package_name, x = template_doc, 
         fixed = TRUE)
-    template.doc <- gsub(pattern = "{package.description}", replace = description, 
-        x = template.doc, fixed = TRUE)
+    template_doc <- gsub(pattern = "{package.description}", replace = description, 
+        x = template_doc, fixed = TRUE)
     
-    code <- read_example_code(package.name)
+    code <- read_example_code(package_name)
     code <- c("```r", code, "```")
     code <- paste(code, sep = "\n")
     
-    template.doc.parts <- c()
-    for (line in template.doc) {
+    template_doc_parts <- c()
+    for (line in template_doc) {
         # trim line
         line <- gsub(pattern = "^\\s+|\\s+$", replace = "", x = line)
         
         if (startsWith(x = line, prefix = "{package.example.code}")) {
-            template.doc.parts <- c(template.doc.parts, code)
+            template_doc_parts <- c(template_doc_parts, code)
         } else {
-            template.doc.parts <- c(template.doc.parts, line)
+            template_doc_parts <- c(template_doc_parts, line)
         }
     }
-    template.doc <- paste(template.doc.parts, sep = "")
+    template_doc <- paste(template_doc_parts, sep = "")
     
-    writeLines(template.doc, con = "./README.md")
+    writeLines(template_doc, con = "./README.md")
 }
 
 generate_docs <- function() {
@@ -140,22 +140,22 @@ generate_docs <- function() {
     dir.create("./docs")
     Rd2md::ReferenceManual(".", outdir = "./docs", verbose = FALSE)
     
-    api.doc.file <- "./docs/api.md"
-    file.rename("./docs/Reference_Manual_..md", api.doc.file)
+    api_doc_file <- "./docs/api.md"
+    file.rename("./docs/Reference_Manual_..md", api_doc_file)
     
-    api.doc <- readLines(api.doc.file)
+    api_doc <- readLines(api_doc_file)
     
-    api.doc <- gsub(pattern = "```", replace = "\n```", x = api.doc)
-    api.doc <- gsub(pattern = "\r", replace = "", x = api.doc)
-    api.doc <- gsub(pattern = "[ \t]+\n", replace = "\n", x = api.doc)
-    api.doc <- gsub(pattern = "\n\n", replace = "\n", x = api.doc)
+    api_doc <- gsub(pattern = "```", replace = "\n```", x = api_doc)
+    api_doc <- gsub(pattern = "\r", replace = "", x = api_doc)
+    api_doc <- gsub(pattern = "[ \t]+\n", replace = "\n", x = api_doc)
+    api_doc <- gsub(pattern = "\n\n", replace = "\n", x = api_doc)
     
-    description.doc <- get_description_doc(api.doc)
-    function.doc <- get_function_api_doc(name = "execute", text = api.doc)
-    api.doc <- c(description.doc, function.doc)
+    description_doc <- get_description_doc(api_doc)
+    function_doc <- get_function_api_doc(name = "execute", text = api_doc)
+    api_doc <- c(description_doc, function_doc)
     
     print("[build] Writing API markdown")
-    writeLines(api.doc, con = api.doc.file)
+    writeLines(api_doc, con = api_doc_file)
     
     generate_readme()
 }
@@ -163,12 +163,12 @@ generate_docs <- function() {
 format <- function() {
     # format code
     print("[build] Formatting Code")
-    format.config <- list(recursive = TRUE, indent = 4, arrow = TRUE, brace.newline = FALSE, 
+    format_config <- list(recursive = TRUE, indent = 4, arrow = TRUE, brace.newline = FALSE, 
         blank = TRUE)
-    do.call(formatR::tidy_dir, c("R", format.config))
-    do.call(formatR::tidy_dir, c("tests", format.config))
-    do.call(formatR::tidy_dir, c("demo", format.config))
-    do.call(formatR::tidy_dir, c("tools", format.config))
+    do.call(formatR::tidy_dir, c("R", format_config))
+    do.call(formatR::tidy_dir, c("tests", format_config))
+    do.call(formatR::tidy_dir, c("demo", format_config))
+    do.call(formatR::tidy_dir, c("tools", format_config))
 }
 
 lint <- function() {
@@ -203,26 +203,26 @@ release <- function() {
     }
 }
 
-format.flow <- c(setup_env, cleanup, format)
-docs.flow <- c(setup_env, cleanup, load, generate_docs)
-dev.flow <- c(docs.flow, format, lint, test)
-default.flow <- c(dev.flow, build)
-flows <- list(format = format.flow, dev = dev.flow, development = dev.flow, docs = docs.flow, 
-    default = default.flow, windows = c(default.flow, build_windows), release = c(default.flow, 
+format_flow <- c(setup_env, cleanup, format)
+docs_flow <- c(setup_env, cleanup, load, generate_docs)
+dev_flow <- c(docs_flow, format, lint, test)
+default_flow <- c(dev_flow, build)
+flows <- list(format = format_flow, dev = dev_flow, development = dev_flow, docs = docs_flow, 
+    default = default_flow, windows = c(default_flow, build_windows), release = c(default_flow, 
         release))
 
 args <- commandArgs(trailingOnly = TRUE)
-flow.name <- "default"
+flow_name <- "default"
 if (length(args) > 0) {
-    flow.name <- args[1]
+    flow_name <- args[1]
 }
 
-sprintf("[build] Build Flow: %s", flow.name)
+sprintf("[build] Build Flow: %s", flow_name)
 
-flow <- flows[[flow.name]]
+flow <- flows[[flow_name]]
 
 if (is.null(flow)) {
-    sprintf("[build] Unsupported Build Flow: %s", flow.name)
+    sprintf("[build] Unsupported Build Flow: %s", flow_name)
 } else {
     for (step in flow) {
         step()

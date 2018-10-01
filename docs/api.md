@@ -45,7 +45,7 @@ Executes a script and returns the output.
 
 ```r
 execute(script = "", args = c(), env = character(), wait = TRUE,
-  runner = NULL, print_commands = FALSE)
+  runner = NULL, print_commands = FALSE, get_runtime_script = FALSE)
 
 ```
 
@@ -60,6 +60,7 @@ Argument      |Description
 `wait`     |     A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
 `runner`     |     The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
 `print_commands`     |     True if to print each command before invocation (not available for windows)
+`get_runtime_script`     |     True to return the actual invoked script in a script output parameter
 
 ## Value
 
