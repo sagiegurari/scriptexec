@@ -89,8 +89,8 @@ Requires: digest, git2r, httr, jsonlite, memoise, rstudioapi, whisker,
 
 Package: digest
 Source: CRAN
-Version: 0.6.14
-Hash: 8017201df840795327c67825e98b52c1
+Version: 0.6.17
+Hash: 6bd8bf6c0430a024a994f2481c2d8516
 
 Package: evaluate
 Source: CRAN
