@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.2.2
+
+* packrat integration to enable easier collaboration #14
+* generate readme dynamically #17
+* document only execute api in generated docs #15
+
 ## 0.2.1
 
 * Support custom runner #9

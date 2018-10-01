@@ -148,6 +148,7 @@ create_script_file <- function(script = "") {
 #' @param wait A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
 #' @param runner The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
 #' @param print_commands True if to print each command before invocation (not available for windows)
+#' @param get_runtime_script True to return the actual invoked script in a script output parameter
 #' @return The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
 #' @export
 #' @examples
@@ -171,7 +172,7 @@ create_script_file <- function(script = "") {
 #' #do not wait for command to finish
 #' execute('echo my really long task', wait = FALSE)
 execute <- function(script = "", args = c(), env = character(), wait = TRUE, runner = NULL, 
-    print_commands = FALSE) {
+    print_commands = FALSE, get_runtime_script = FALSE) {
     full_script <- modify_script(script = script, args = args, env = env, print_commands = print_commands)
     
     # create a temporary file to store the script
@@ -207,5 +208,11 @@ execute <- function(script = "", args = c(), env = character(), wait = TRUE, run
     }
     output_text <- paste(c(output), sep = "\n", collapse = "")
     
-    list(status = status, output = output_text)
+    script_output <- list(status = status, output = output_text)
+    
+    if (get_runtime_script) {
+        script_output$script <- full_script
+    }
+    
+    script_output
 }

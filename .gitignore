@@ -5,3 +5,5 @@
 .RData
 inst/doc
 /temp
+packrat/lib*/
+packrat/src

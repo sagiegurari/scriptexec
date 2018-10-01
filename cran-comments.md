@@ -1,21 +1,12 @@
 ## Comments
 
-* Add support for command line arguments to be passed to the script #1
-* Merge all output text instead of vector #5
-* Add status 0 instead of null #6
-* Pass env variables as part of script execution #7
-* add wait support #8
-* Export all functions #4
-* Add demos #3
-* Support custom runner #9
-* support env vars for windows platform #11
-* support flag to print every command before invocation #12
-* markdown documentation hosted on github #10
-* Consistent error handling for all platforms
+* packrat integration to enable easier collaboration #14
+* generate readme dynamically #17
+* document only execute api in generated docs #15
 
 ## Test environments
 
-* local ubuntu install, R version 3.4.2 (2017-09-28)
+* local raspberry pi install, R version 3.4.2 (2017-09-28)
 * linux (via travis) release, oldrel, devel
 * windows (via appveyor) release, oldrel, devel
 * build_win
