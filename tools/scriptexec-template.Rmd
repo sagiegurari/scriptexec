@@ -1,0 +1,28 @@
+---
+title: "scriptexec"
+author: "Sagie Gur-Ari"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{scriptexec}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Executing Scripts
+
+The purpose of the scriptexec package is to enable quick and easy way to execute native scripts.
+
+```{r, warning = FALSE}
+library(scriptexec)
+library(testthat)
+
+{package.example.code}
+```

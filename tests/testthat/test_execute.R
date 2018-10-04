@@ -9,12 +9,12 @@ describe("execute", {
     })
     
     it("valid command", {
-        output <- scriptexec::execute("dir")
+        output <- scriptexec::execute("echo test")
         expect_equal(output$status, 0)
     })
     
     it("valid commands", {
-        output <- scriptexec::execute(c("dir", "cd", "dir"))
+        output <- scriptexec::execute(c("echo", "cd", "echo test"))
         expect_equal(output$status, 0)
     })
     
@@ -29,7 +29,7 @@ describe("execute", {
         output <- scriptexec::execute(paste("echo", arg, sep = " "), c("TEST_R"))
         expect_equal(output$status, 0)
         
-        found <- is_string_exists("TEST_R", output$output)
+        found <- grepl("TEST_R", output$output)
         expect_true(found)
     })
     
@@ -39,7 +39,7 @@ describe("execute", {
         output <- scriptexec::execute(command, env = c("ENV_TEST=MYENV"))
         expect_equal(output$status, 0)
         
-        found <- is_string_exists("MYENV", output$output)
+        found <- grepl("MYENV", output$output)
         expect_true(found)
     })
     
@@ -49,7 +49,7 @@ describe("execute", {
     })
     
     it("no wait", {
-        output <- scriptexec::execute("dir", wait = FALSE)
+        output <- scriptexec::execute("echo test", wait = FALSE)
         expect_equal(output$status, -1)
     })
     
@@ -60,12 +60,12 @@ describe("execute", {
     
     it("runner provided", {
         runner <- get_os_string("sh", "cmd.exe")
-        output <- scriptexec::execute("dir", runner = runner)
+        output <- scriptexec::execute("echo test", runner = runner)
         expect_equal(output$status, 0)
     })
     
     it("print_commands", {
-        output <- scriptexec::execute("dir", print_commands = TRUE)
+        output <- scriptexec::execute("echo test", print_commands = TRUE)
         expect_equal(output$status, 0)
     })
     
@@ -76,19 +76,19 @@ describe("execute", {
     
     describe("execute", {
         it("default", {
-            output <- scriptexec::execute("dir")
+            output <- scriptexec::execute("echo test")
             expect_true(is.null(output$script))
         })
         
         it("FALSE", {
-            output <- scriptexec::execute("dir", get_runtime_script = FALSE)
+            output <- scriptexec::execute("echo test", get_runtime_script = FALSE)
             expect_true(is.null(output$script))
         })
         
         it("TRUE", {
-            output <- scriptexec::execute("dir", get_runtime_script = TRUE)
+            output <- scriptexec::execute("echo test", get_runtime_script = TRUE)
             expect_false(is.null(output$script))
-            found <- is_string_exists("dir", output$script)
+            found <- grepl("echo test", output$script)
             expect_true(found)
         })
     })

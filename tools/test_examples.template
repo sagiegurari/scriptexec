@@ -1,0 +1,9 @@
+context("Examples")
+
+describe("Examples", {
+    source("helper.R")
+
+    it("all examples", {
+        {package.example.code}
+    })
+})

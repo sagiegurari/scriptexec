@@ -30,7 +30,7 @@ describe("API Stability", {
             output <- scriptexec::execute(command, "TEST_R")
             expect_equal(output$status, 0)
             
-            found <- is_string_exists("TEST_R", output$output)
+            found <- grepl("TEST_R", output$output)
             expect_true(found)
         })
         
@@ -40,7 +40,7 @@ describe("API Stability", {
             output <- scriptexec::execute(command, c("TEST_R"))
             expect_equal(output$status, 0)
             
-            found <- is_string_exists("TEST_R", output$output)
+            found <- grepl("TEST_R", output$output)
             expect_true(found)
         })
         
@@ -50,7 +50,7 @@ describe("API Stability", {
             output <- scriptexec::execute(command, args = "TEST_R")
             expect_equal(output$status, 0)
             
-            found <- is_string_exists("TEST_R", output$output)
+            found <- grepl("TEST_R", output$output)
             expect_true(found)
         })
         
@@ -60,7 +60,7 @@ describe("API Stability", {
             output <- scriptexec::execute(command, NULL, "ENV_TEST=MYENV")
             expect_equal(output$status, 0)
             
-            found <- is_string_exists("MYENV", output$output)
+            found <- grepl("MYENV", output$output)
             expect_equal(found, TRUE)
         })
         
@@ -70,7 +70,7 @@ describe("API Stability", {
             output <- scriptexec::execute(command, NULL, c("ENV_TEST=MYENV"))
             expect_equal(output$status, 0)
             
-            found <- is_string_exists("MYENV", output$output)
+            found <- grepl("MYENV", output$output)
             expect_equal(found, TRUE)
         })
         
@@ -80,7 +80,7 @@ describe("API Stability", {
             output <- scriptexec::execute(command, env = c("ENV_TEST=MYENV"))
             expect_equal(output$status, 0)
             
-            found <- is_string_exists("MYENV", output$output)
+            found <- grepl("MYENV", output$output)
             expect_equal(found, TRUE)
         })
         
@@ -124,7 +124,7 @@ describe("API Stability", {
                 TRUE, runner, TRUE)
             expect_equal(output$status, 0)
             
-            found <- is_string_exists("TEST_ARG MYENV", output$output)
+            found <- grepl("TEST_ARG MYENV", output$output)
             expect_equal(found, TRUE)
             
             output <- scriptexec::execute(command, "TEST_ARG", c("ENV_TEST=MYENV"), 
@@ -140,39 +140,11 @@ describe("API Stability", {
                 wait = TRUE, runner = runner, print_commands = TRUE)
             expect_equal(output$status, 0)
             
-            found <- is_string_exists("TEST_ARG MYENV", output$output)
+            found <- grepl("TEST_ARG MYENV", output$output)
             expect_equal(found, TRUE)
             
             output <- scriptexec::execute(command, args = "TEST_ARG", env = c("ENV_TEST=MYENV"), 
                 wait = FALSE)
-            expect_equal(output$status, -1)
-        })
-    })
-    
-    describe("examples", {
-        it("all examples", {
-            # execute script text
-            output <- scriptexec::execute("echo Current Directory:\ndir")
-            expect_equal(output$status, 0)
-            expect_equal(is_string_exists("test_api_stability.R", output$output), 
-                TRUE)
-            
-            # execute multiple commands as a script
-            output <- scriptexec::execute(c("cd", "echo User Home:", "dir"))
-            expect_equal(output$status, 0)
-            
-            # pass arguments (later defined as ARG1, ARG2, ...) and env vars
-            command <- get_os_string("echo $ARG1 $ARG2 $MYENV", "echo %ARG1% %ARG2% %MYENV%")
-            output <- execute(command, args = c("TEST1", "TEST2"), env = c("MYENV=TEST3"))
-            expect_equal(output$status, 0)
-            expect_equal(is_string_exists("TEST1 TEST2 TEST3", output$output), TRUE)
-            
-            # non zero status code is returned in case of errors
-            expect_warning(output <- scriptexec::execute("exit 1"))
-            expect_equal(output$status, 1)
-            
-            # do not wait for command to finish
-            output <- execute("echo my really long task", wait = FALSE)
             expect_equal(output$status, -1)
         })
     })

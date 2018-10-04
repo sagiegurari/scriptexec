@@ -14,10 +14,10 @@ describe("generate_env_setup_script", {
     it("multiple env vars", {
         script <- scriptexec::generate_env_setup_script(c("ENV1=VALUE1", "ENV2=VALUE2"))
         
-        found <- is_string_exists("ENV1=VALUE1", script)
+        found <- grepl("ENV1=VALUE1", script)
         expect_true(found, TRUE)
         
-        found <- is_string_exists("ENV2=VALUE2", script)
+        found <- grepl("ENV2=VALUE2", script)
         expect_true(found, TRUE)
         
         prefix <- get_os_string("export", "SET")

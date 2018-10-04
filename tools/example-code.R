@@ -1,29 +1,3 @@
----
-title: "scriptexec"
-author: "Sagie Gur-Ari"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{scriptexec}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
-## Executing Scripts
-
-The purpose of the scriptexec package is to enable quick and easy way to execute native scripts.
-
-```{r, warning = FALSE}
-library(scriptexec)
-library(testthat)
-
 # execute script text
 output <- scriptexec::execute("echo running some command\necho running another command")
 expect_equal(output$status, 0)
@@ -35,9 +9,9 @@ expect_equal(output$status, 0)
 
 # pass arguments (later defined as ARG1, ARG2, ...) and env vars
 if (.Platform$OS.type == "windows") {
-command <- "echo %ARG1% %ARG2% %MYENV%"
+    command <- "echo %ARG1% %ARG2% %MYENV%"
 } else {
-command <- "echo $ARG1 $ARG2 $MYENV"
+    command <- "echo $ARG1 $ARG2 $MYENV"
 }
 output <- scriptexec::execute(command, args = c("TEST1", "TEST2"), env = c("MYENV=TEST3"))
 expect_equal(output$status, 0)
@@ -50,4 +24,3 @@ expect_equal(output$status, 1)
 # do not wait for command to finish
 output <- scriptexec::execute("echo my really long task", wait = FALSE)
 expect_equal(output$status, -1)
-```

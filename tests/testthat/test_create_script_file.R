@@ -7,7 +7,7 @@ describe("create_script_file", {
         filename <- scriptexec::create_script_file()
         extension <- get_os_string(".sh", ".bat")
         
-        found <- is_string_exists(extension, filename)
+        found <- grepl(extension, filename)
         expect_true(found)
         
         text <- readLines(filename)
@@ -18,7 +18,7 @@ describe("create_script_file", {
         filename <- scriptexec::create_script_file("test123")
         extension <- get_os_string(".sh", ".bat")
         
-        found <- is_string_exists(extension, filename)
+        found <- grepl(extension, filename)
         expect_true(found)
         
         text <- readLines(filename)
