@@ -1,8 +1,6 @@
 context("Examples")
 
 describe("Examples", {
-    source("helper.R")
-    
     it("all examples", {
         # execute script text
         output <- scriptexec::execute("echo running some command\necho running another command")
