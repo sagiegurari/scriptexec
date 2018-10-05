@@ -112,7 +112,9 @@ get_command <- function(filename, runner = NULL) {
         command <- runner
     }
     
+    # nolint start (lintr bug)
     args <- get_platform_value(c(filename), c("/C", filename))
+    # nolint end
     
     list(command = command, args = args)
 }
@@ -189,13 +191,13 @@ execute <- function(script = "", args = c(), env = character(), wait = TRUE, run
         arg_list <- c(list(minimized = TRUE, invisible = TRUE), arg_list)
     }
     
-    output <- tryCatch({
-        do.call(system2, arg_list)
-    }, error = function(error) {
+    on_error <- function(error) {
         output <- ""
         attr(output, "status") <- 1
         output
-    })
+    }
+    
+    output <- tryCatch(do.call(system2, arg_list), error = on_error)
     
     # get output
     status <- attr(output, "status")

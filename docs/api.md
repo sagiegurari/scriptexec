@@ -2,7 +2,7 @@
 
 <!-- toc -->
 
-October 04, 2018
+October 06, 2018
 
 # DESCRIPTION
 
@@ -20,7 +20,8 @@ Depends: R (>= 3.2.3)
 Encoding: UTF-8
 RoxygenNote: 6.1.0
 Suggests: knitr,
-    testthat
+    testthat,
+    lintr
 VignetteBuilder: knitr
 ```
 
