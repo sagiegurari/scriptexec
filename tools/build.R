@@ -25,12 +25,6 @@ load <- function() {
 format <- function() {
     # format code
     print("[build] Formatting Code")
-    format_config <- list(recursive = TRUE, indent = 4, arrow = TRUE, brace.newline = FALSE,
-        blank = TRUE)
-    do.call(formatR::tidy_dir, c("R", format_config))
-    do.call(formatR::tidy_dir, c("tests", format_config))
-    do.call(formatR::tidy_dir, c("demo", format_config))
-    do.call(formatR::tidy_dir, c("tools", format_config))
 
     directories <- c("R", "tests", "demo", "tools")
     for (directory in directories) {
