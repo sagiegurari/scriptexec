@@ -30,7 +30,7 @@ expect_equal(output$status, 0)
 expect_equal(grepl("running some command", output$output), TRUE)
 
 # execute multiple commands as a script
-output <- scriptexec::execute(c("cd", "echo User Home:"))
+output <- scriptexec::execute(c("cd", "echo test"))
 expect_equal(output$status, 0)
 
 # pass arguments (later defined as ARG1, ARG2, ...) and env vars

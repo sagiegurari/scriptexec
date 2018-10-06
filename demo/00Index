@@ -1,1 +1,1 @@
-print-directory	"Simple script execution demo which prints a directory contents"
+execute-multiple-commands	"Simple script execution demo which invokes multiple commands"
