@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.2.3
+
+* add all dev dependencies to suggest field #23
+* share example code in unit test, readme and vignettes #21
+* add linter unit test #20
+* fix tests to pass on all platforms #24
+* fix example unit test #19
+
 ## 0.2.2
 
 * output executed script #16
