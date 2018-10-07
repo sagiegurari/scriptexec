@@ -254,8 +254,8 @@ generate_vignettes <- function() {
 
 format_flow <- c(setup_env, cleanup, generate_test_code, format)
 docs_flow <- c(setup_env, cleanup, load, generate_docs)
-dev_flow <- c(docs_flow, generate_test_code, format, lint, test)
-default_flow <- c(dev_flow, build)
+dev_flow <- c(docs_flow, generate_test_code, format, test)
+default_flow <- c(dev_flow, lint, build)
 flows <- list(format = format_flow, dev = dev_flow, development = dev_flow,
     docs = docs_flow, default = default_flow, windows = c(default_flow,
         build_windows), release = c(default_flow, release))
