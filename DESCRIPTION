@@ -1,6 +1,6 @@
 Package: scriptexec
 Title: Execute Native Scripts
-Version: 0.2.2
+Version: 0.2.3
 Authors@R: person("Sagie", "Gur-Ari", email = "sagiegurari@gmail.com", role = c("aut", "cre"))
 Description: Run complex native scripts with a single command, similar to system commands.
 License: Apache License 2.0
