@@ -31,9 +31,10 @@ format <- function() {
         formatR::tidy_dir(directory, recursive = TRUE, indent = 4, arrow = TRUE,
             brace.newline = FALSE, blank = TRUE)
 
-        files <- list.files(path = directory, pattern = ".R")
+        files <- list.files(path = directory, pattern = ".R", recursive = TRUE)
         for (file in files) {
             full_path <- file.path(directory, file)
+            print(sprintf("[build] Custom Formatting File: %s", full_path))
             code <- readLines(full_path)
 
             formatted_code <- c()
