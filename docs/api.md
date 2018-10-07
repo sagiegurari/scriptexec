@@ -19,9 +19,16 @@ BugReports: https://github.com/sagiegurari/scriptexec/issues
 Depends: R (>= 3.2.3)
 Encoding: UTF-8
 RoxygenNote: 6.1.0
-Suggests: knitr,
-    testthat,
-    lintr
+Suggests: knitr (>= 1.20),
+    testthat (>= 2.0.0),
+    lintr (>= 1.0.2),
+    formatR (>= 1.5),
+    devtools (>= 1.13.6),
+    Rcpp (>= 0.12.19),
+    digest (>= 0.6.17),
+    roxygen2 (>= 6.1.0),
+    rmarkdown (>= 1.10),
+    rversions (>= 1.0.3)
 VignetteBuilder: knitr
 ```
 
