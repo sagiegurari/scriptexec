@@ -29,7 +29,7 @@ format <- function() {
     directories <- c("R", "tests", "demo", "tools")
     for (directory in directories) {
         formatR::tidy_dir(directory, recursive = TRUE, indent = 4, arrow = TRUE,
-            brace.newline = FALSE, blank = TRUE)
+            brace.newline = FALSE, blank = TRUE, width.cutoff = 70)
 
         files <- list.files(path = directory, pattern = ".R", recursive = TRUE)
         for (file in files) {
@@ -189,7 +189,7 @@ read_example_code <- function() {
     output <- c()
     for (line in code) {
         # trim line
-        line <- gsub(pattern = "^\\s+|\\s+$", replace = "", x = line)
+        line <- gsub(pattern = "\\s+$", replace = "", x = line)
         output <- c(output, line)
     }
 
@@ -204,10 +204,10 @@ generate_readme <- function() {
     version <- read_package_value("Version")
     description <- read_package_value("Description")
 
-    template_doc <- gsub(pattern = "{package.version}", replace = version, x = template_doc,
-        fixed = TRUE)
-    template_doc <- gsub(pattern = "{package.name}", replace = package_name, x = template_doc,
-        fixed = TRUE)
+    template_doc <- gsub(pattern = "{package.version}", replace = version,
+        x = template_doc, fixed = TRUE)
+    template_doc <- gsub(pattern = "{package.name}", replace = package_name,
+        x = template_doc, fixed = TRUE)
     template_doc <- gsub(pattern = "{package.description}", replace = description,
         x = template_doc, fixed = TRUE)
 
@@ -256,9 +256,9 @@ format_flow <- c(setup_env, cleanup, generate_test_code, format)
 docs_flow <- c(setup_env, cleanup, load, generate_docs)
 dev_flow <- c(docs_flow, generate_test_code, format, lint, test)
 default_flow <- c(dev_flow, build)
-flows <- list(format = format_flow, dev = dev_flow, development = dev_flow, docs = docs_flow,
-    default = default_flow, windows = c(default_flow, build_windows), release = c(default_flow,
-        release))
+flows <- list(format = format_flow, dev = dev_flow, development = dev_flow,
+    docs = docs_flow, default = default_flow, windows = c(default_flow,
+        build_windows), release = c(default_flow, release))
 
 args <- commandArgs(trailingOnly = TRUE)
 flow_name <- "default"

@@ -107,7 +107,8 @@ describe("API Stability", {
         })
 
         it("print_commands as parameter 6", {
-            output <- scriptexec::execute("exit 0", NULL, NULL, TRUE, NULL, TRUE)
+            output <- scriptexec::execute("exit 0", NULL, NULL, TRUE, NULL,
+                TRUE)
             expect_equal(output$status, 0)
         })
 
@@ -117,33 +118,39 @@ describe("API Stability", {
         })
 
         it("all paramters", {
-            command <- get_os_string("echo $ARG1 $ENV_TEST", "echo %ARG1% %ENV_TEST%")
+            unix_script <- "echo $ARG1 $ENV_TEST"
+            windows_script <- "echo %ARG1% %ENV_TEST%"
+            command <- get_os_string(unix_script, windows_script)
             runner <- get_os_string("sh", "cmd.exe")
+            env <- c("ENV_TEST=MYENV")
 
-            output <- scriptexec::execute(command, "TEST_ARG", c("ENV_TEST=MYENV"),
-                TRUE, runner, TRUE)
+            output <- scriptexec::execute(command, "TEST_ARG", env, TRUE,
+                runner, TRUE)
             expect_equal(output$status, 0)
 
             found <- grepl("TEST_ARG MYENV", output$output)
             expect_equal(found, TRUE)
 
-            output <- scriptexec::execute(command, "TEST_ARG", c("ENV_TEST=MYENV"),
-                FALSE)
+            output <- scriptexec::execute(command, "TEST_ARG", env, FALSE)
             expect_equal(output$status, -1)
         })
 
         it("all named paramters", {
-            command <- get_os_string("echo $ARG1 $ENV_TEST", "echo %ARG1% %ENV_TEST%")
+            unix_script <- "echo $ARG1 $ENV_TEST"
+            windows_script <- "echo %ARG1% %ENV_TEST%"
+            command <- get_os_string(unix_script, windows_script)
             runner <- get_os_string("sh", "cmd.exe")
+            env <- c("ENV_TEST=MYENV")
+            args <- "TEST_ARG"
 
-            output <- scriptexec::execute(command, args = "TEST_ARG", env = c("ENV_TEST=MYENV"),
+            output <- scriptexec::execute(command, args = args, env = env,
                 wait = TRUE, runner = runner, print_commands = TRUE)
             expect_equal(output$status, 0)
 
             found <- grepl("TEST_ARG MYENV", output$output)
             expect_equal(found, TRUE)
 
-            output <- scriptexec::execute(command, args = "TEST_ARG", env = c("ENV_TEST=MYENV"),
+            output <- scriptexec::execute(command, args = args, env = env,
                 wait = FALSE)
             expect_equal(output$status, -1)
         })

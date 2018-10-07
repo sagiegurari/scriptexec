@@ -25,9 +25,10 @@ Simply load the library and invoke the execute
 library(scriptexec)
 
 # execute script text
-output <- scriptexec::execute("echo running some command\necho running another command")
+output <- scriptexec::execute("echo command1\necho command2")
 expect_equal(output$status, 0)
-expect_equal(grepl("running some command", output$output), TRUE)
+expect_equal(grepl("command1", output$output), TRUE)
+expect_equal(grepl("command2", output$output), TRUE)
 
 # execute multiple commands as a script
 output <- scriptexec::execute(c("cd", "echo test"))
@@ -35,9 +36,9 @@ expect_equal(output$status, 0)
 
 # pass arguments (later defined as ARG1, ARG2, ...) and env vars
 if (.Platform$OS.type == "windows") {
-command <- "echo %ARG1% %ARG2% %MYENV%"
+    command <- "echo %ARG1% %ARG2% %MYENV%"
 } else {
-command <- "echo $ARG1 $ARG2 $MYENV"
+    command <- "echo $ARG1 $ARG2 $MYENV"
 }
 output <- scriptexec::execute(command, args = c("TEST1", "TEST2"), env = c("MYENV=TEST3"))
 expect_equal(output$status, 0)

@@ -25,8 +25,9 @@ describe("execute", {
 
     it("cli arguments", {
         arg <- get_os_string("$ARG1", "%ARG1%")
+        script <- paste("echo", arg, sep = " ")
 
-        output <- scriptexec::execute(paste("echo", arg, sep = " "), c("TEST_R"))
+        output <- scriptexec::execute(script, c("TEST_R"))
         expect_equal(output$status, 0)
 
         found <- grepl("TEST_R", output$output)
@@ -81,12 +82,14 @@ describe("execute", {
         })
 
         it("FALSE", {
-            output <- scriptexec::execute("echo test", get_runtime_script = FALSE)
+            script <- "echo test"
+            output <- scriptexec::execute(script, get_runtime_script = FALSE)
             expect_true(is.null(output$script))
         })
 
         it("TRUE", {
-            output <- scriptexec::execute("echo test", get_runtime_script = TRUE)
+            script <- "echo test"
+            output <- scriptexec::execute(script, get_runtime_script = TRUE)
             expect_false(is.null(output$script))
             found <- grepl("echo test", output$script)
             expect_true(found)

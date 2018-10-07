@@ -12,7 +12,8 @@ describe("generate_env_setup_script", {
     })
 
     it("multiple env vars", {
-        script <- scriptexec::generate_env_setup_script(c("ENV1=VALUE1", "ENV2=VALUE2"))
+        script <- scriptexec::generate_env_setup_script(c("ENV1=VALUE1",
+            "ENV2=VALUE2"))
 
         found <- grepl("ENV1=VALUE1", script)
         expect_true(found, TRUE)
@@ -21,8 +22,8 @@ describe("generate_env_setup_script", {
         expect_true(found, TRUE)
 
         prefix <- get_os_string("export", "SET")
-        expected_result <- paste(paste(prefix, "ENV1=VALUE1", sep = " "), paste(prefix,
-            "ENV2=VALUE2", sep = " "), sep = "\n")
+        expected_result <- paste(paste(prefix, "ENV1=VALUE1", sep = " "),
+            paste(prefix, "ENV2=VALUE2", sep = " "), sep = "\n")
 
         expect_equal(expected_result, script)
     })

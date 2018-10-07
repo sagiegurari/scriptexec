@@ -1,7 +1,8 @@
 # execute script text
-output <- scriptexec::execute("echo running some command\necho running another command")
+output <- scriptexec::execute("echo command1\necho command2")
 expect_equal(output$status, 0)
-expect_equal(grepl("running some command", output$output), TRUE)
+expect_equal(grepl("command1", output$output), TRUE)
+expect_equal(grepl("command2", output$output), TRUE)
 
 # execute multiple commands as a script
 output <- scriptexec::execute(c("cd", "echo test"))

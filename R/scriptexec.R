@@ -92,7 +92,8 @@ modify_script <- function(script, args = c(), env = character(), print_commands 
     }
 
     script_string <- paste(script, collapse = "\n")
-    paste(initial_commands, cd_line, env_line, args_lines, script_string, sep = "\n")
+    paste(initial_commands, cd_line, env_line, args_lines, script_string,
+        sep = "\n")
 }
 
 #' Returns the command and arguments needed to execute the provided script file on the current platform.
@@ -173,9 +174,10 @@ create_script_file <- function(script = "") {
 #'
 #' #do not wait for command to finish
 #' execute('echo my really long task', wait = FALSE)
-execute <- function(script = "", args = c(), env = character(), wait = TRUE, runner = NULL,
-    print_commands = FALSE, get_runtime_script = FALSE) {
-    full_script <- modify_script(script = script, args = args, env = env, print_commands = print_commands)
+execute <- function(script = "", args = c(), env = character(), wait = TRUE,
+    runner = NULL, print_commands = FALSE, get_runtime_script = FALSE) {
+    full_script <- modify_script(script = script, args = args, env = env,
+        print_commands = print_commands)
 
     # create a temporary file to store the script
     filename <- create_script_file(full_script)
@@ -184,8 +186,8 @@ execute <- function(script = "", args = c(), env = character(), wait = TRUE, run
     command <- command_struct$command
     cli_args <- command_struct$args
 
-    arg_list <- list(command = command, args = cli_args, stdout = wait, stderr = wait,
-        stdin = "", input = NULL, env = env, wait = wait)
+    arg_list <- list(command = command, args = cli_args, stdout = wait,
+        stderr = wait, stdin = "", input = NULL, env = env, wait = wait)
     windows <- is_windows()
     if (windows) {
         arg_list <- c(list(minimized = TRUE, invisible = TRUE), arg_list)
