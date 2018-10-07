@@ -30,6 +30,14 @@ expect_equal(output$status, 0)
 expect_equal(grepl("command1", output$output), TRUE)
 expect_equal(grepl("command2", output$output), TRUE)
 
+if (.Platform$OS.type == "windows") {
+    ls_command <- "dir"
+} else {
+    ls_command <- "ls"
+}
+output <- scriptexec::execute(c("echo user home:", ls_command))
+expect_equal(output$status, 0)
+
 # execute multiple commands as a script
 output <- scriptexec::execute(c("cd", "echo test"))
 expect_equal(output$status, 0)
