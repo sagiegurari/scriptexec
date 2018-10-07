@@ -7,6 +7,7 @@
 * add linter unit test #20
 * fix tests to pass on all platforms #24
 * fix example unit test #19
+* script output key checks in api stability unit tests #22
 
 ## 0.2.2
 

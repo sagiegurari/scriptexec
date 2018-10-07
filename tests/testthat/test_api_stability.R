@@ -117,6 +117,21 @@ describe("API Stability", {
             expect_equal(output$status, 0)
         })
 
+        it("get_runtime_script as parameter 7", {
+            script <- "echo test"
+            output <- scriptexec::execute(script, NULL, NULL, TRUE, NULL,
+                TRUE, TRUE)
+            found <- grepl(script, output$script)
+            expect_true(found)
+        })
+
+        it("get_runtime_script as named parameter", {
+            script <- "echo test"
+            output <- scriptexec::execute(script, get_runtime_script = TRUE)
+            found <- grepl(script, output$script)
+            expect_true(found)
+        })
+
         it("all paramters", {
             unix_script <- "echo $ARG1 $ENV_TEST"
             windows_script <- "echo %ARG1% %ENV_TEST%"
@@ -125,8 +140,11 @@ describe("API Stability", {
             env <- c("ENV_TEST=MYENV")
 
             output <- scriptexec::execute(command, "TEST_ARG", env, TRUE,
-                runner, TRUE)
+                runner, TRUE, TRUE)
             expect_equal(output$status, 0)
+
+            found <- grepl("echo", output$script)
+            expect_true(found)
 
             found <- grepl("TEST_ARG MYENV", output$output)
             expect_equal(found, TRUE)
@@ -143,15 +161,19 @@ describe("API Stability", {
             env <- c("ENV_TEST=MYENV")
             args <- "TEST_ARG"
 
-            output <- scriptexec::execute(command, args = args, env = env,
-                wait = TRUE, runner = runner, print_commands = TRUE)
+            output <- scriptexec::execute(script = command, args = args,
+                env = env, wait = TRUE, runner = runner, print_commands = TRUE,
+                get_runtime_script = TRUE)
             expect_equal(output$status, 0)
+
+            found <- grepl("echo", output$script)
+            expect_true(found)
 
             found <- grepl("TEST_ARG MYENV", output$output)
             expect_equal(found, TRUE)
 
-            output <- scriptexec::execute(command, args = args, env = env,
-                wait = FALSE)
+            output <- scriptexec::execute(script = command, args = args,
+                env = env, wait = FALSE, get_runtime_script = TRUE)
             expect_equal(output$status, -1)
         })
     })
