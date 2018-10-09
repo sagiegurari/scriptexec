@@ -119,6 +119,8 @@ generate_example_code <- function() {
     example_code <- read_example_code()
     modified_code <- c()
     for (line in example_code) {
+        line <- gsub(pattern = "scriptexec::execute(", replace = "execute(",
+            fixed = TRUE, x = line)
         line <- paste("#' ", line, sep = "")
         modified_code <- c(modified_code, line)
     }
@@ -134,10 +136,11 @@ generate_example_code <- function() {
             modified_code <- c(modified_code, line)
         } else if (started) {
             if (startsWith(x = line, prefix = "execute <- function(")) {
-                modified_code <- c(modified_code, example_tag, example_code, line)
-                done = TRUE
+                modified_code <- c(modified_code, example_tag, example_code,
+                  line)
+                done <- TRUE
             } else if (grepl(" <- function(", line, fixed = TRUE)) {
-                started = FALSE
+                started <- FALSE
                 modified_code <- c(modified_code, temp_code, line)
                 temp_code <- c()
             } else {
@@ -145,7 +148,7 @@ generate_example_code <- function() {
             }
         } else if (startsWith(x = line, prefix = example_tag)) {
             temp_code <- c(temp_code, line)
-            started = TRUE
+            started <- TRUE
         } else {
             modified_code <- c(modified_code, line)
         }
