@@ -60,6 +60,9 @@ lint <- function() {
 generate_docs <- function() {
     # generate documentation
     print("[build] Generating Documentation")
+
+    generate_example_code()
+
     devtools::document()
     dir.create("./docs")
     Rd2md::ReferenceManual(".", outdir = "./docs", verbose = FALSE)
@@ -105,6 +108,51 @@ build_windows <- function() {
 release <- function() {
     print("[build] Releasing New Version")
     devtools::release()
+}
+
+generate_example_code <- function() {
+    print("[build] Generating example code")
+
+    file <- "./R/scriptexec.R"
+    r_code <- readLines(file)
+
+    example_code <- read_example_code()
+    modified_code <- c()
+    for (line in example_code) {
+        line <- paste("#' ", line, sep = "")
+        modified_code <- c(modified_code, line)
+    }
+    example_code <- c(modified_code)
+
+    modified_code <- c()
+    temp_code <- c()
+    started <- FALSE
+    done <- FALSE
+    example_tag <- "#' @examples"
+    for (line in r_code) {
+        if (done) {
+            modified_code <- c(modified_code, line)
+        } else if (started) {
+            if (startsWith(x = line, prefix = "execute <- function(")) {
+                modified_code <- c(modified_code, example_tag, example_code, line)
+                done = TRUE
+            } else if (grepl(" <- function(", line, fixed = TRUE)) {
+                started = FALSE
+                modified_code <- c(modified_code, temp_code, line)
+                temp_code <- c()
+            } else {
+                temp_code <- c(temp_code, line)
+            }
+        } else if (startsWith(x = line, prefix = example_tag)) {
+            temp_code <- c(temp_code, line)
+            started = TRUE
+        } else {
+            modified_code <- c(modified_code, line)
+        }
+    }
+    modified_code <- paste(modified_code, sep = "")
+
+    writeLines(modified_code, con = file)
 }
 
 generate_test_code <- function() {
