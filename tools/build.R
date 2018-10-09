@@ -122,8 +122,6 @@ generate_example_code <- function() {
     example_code <- c(example_prefix, example_code)
     modified_code <- c()
     for (line in example_code) {
-        line <- gsub(pattern = "scriptexec::execute(", replace = "execute(",
-            fixed = TRUE, x = line)
         line <- paste("#' ", line, sep = "")
         modified_code <- c(modified_code, line)
     }
