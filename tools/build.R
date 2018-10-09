@@ -117,6 +117,9 @@ generate_example_code <- function() {
     r_code <- readLines(file)
 
     example_code <- read_example_code()
+    example_prefix <- c("library(\"scriptexec\")", "library(\"testthat\")",
+        "")
+    example_code <- c(example_prefix, example_code)
     modified_code <- c()
     for (line in example_code) {
         line <- gsub(pattern = "scriptexec::execute(", replace = "execute(",

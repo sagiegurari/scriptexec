@@ -79,6 +79,9 @@ Argument      |Description
 
 
 ```r 
+ library("scriptexec")
+ library("testthat")
+ 
  # execute script text
  output <- execute("echo command1\necho command2")
  expect_equal(output$status, 0)

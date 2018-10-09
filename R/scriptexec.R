@@ -155,6 +155,9 @@ create_script_file <- function(script = "") {
 #' @return The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
 #' @export
 #' @examples
+#' library('scriptexec')
+#' library('testthat')
+#'
 #' # execute script text
 #' output <- execute('echo command1\necho command2')
 #' expect_equal(output$status, 0)

@@ -33,6 +33,9 @@ The stdout and stderr are captured and returned.
 In case of errors, the exit code will return in the status field.
 }
 \examples{
+library('scriptexec')
+library('testthat')
+
 # execute script text
 output <- execute('echo command1\\necho command2')
 expect_equal(output$status, 0)
