@@ -9,6 +9,7 @@
 * Fix example unit test #19
 * Script output key checks in api stability unit tests #22
 * Automatically test all demos
+* Run mac build in travis #28
 * Test specific R version in travis build
 
 ## 0.2.2
