@@ -75,7 +75,7 @@ describe("execute", {
         expect_equal(output$status, 1)
     })
 
-    describe("execute", {
+    describe("script", {
         it("default", {
             output <- scriptexec::execute("echo test")
             expect_true(is.null(output$script))

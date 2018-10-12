@@ -141,6 +141,48 @@ create_script_file <- function(script = "") {
     filename
 }
 
+#' Builds the output structure.
+#'
+#' @param output The invocation output
+#' @param wait A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously
+#' @return The script output structure
+#' @export
+#' @examples
+#' output <- c('line 1', '\n', 'line 2')
+#' attr(output, 'status') <- 15
+#' script_output <- build_output(output)
+build_output <- function(output, wait) {
+    status <- attr(output, "status")
+    if (is.null(status)) {
+        if (wait) {
+            status <- 0
+        } else {
+            status <- -1
+        }
+    }
+
+    error_message <- attr(output, "errmsg")
+
+    output_text <- paste(c(output), sep = "\n", collapse = "")
+
+    script_output <- list(status = status, output = output_text, error = error_message)
+
+    script_output
+}
+
+#' Internal error handler.
+#'
+#' @param error The invocation error
+#' @return The invocation output
+#' @export
+on_invoke_error <- function(error) {
+    output <- ""
+    attr(output, "status") <- 1
+    attr(output, "errmsg") <- error
+
+    output
+}
+
 #' Executes a script and returns the output.
 #' The stdout and stderr are captured and returned.
 #' In case of errors, the exit code will return in the status field.
@@ -212,26 +254,10 @@ execute <- function(script = "", args = c(), env = character(), wait = TRUE,
         arg_list <- c(list(minimized = TRUE, invisible = TRUE), arg_list)
     }
 
-    on_error <- function(error) {
-        output <- ""
-        attr(output, "status") <- 1
-        output
-    }
-
-    output <- tryCatch(do.call(system2, arg_list), error = on_error)
+    output <- tryCatch(do.call(system2, arg_list), error = on_invoke_error)
 
     # get output
-    status <- attr(output, "status")
-    if (is.null(status)) {
-        if (wait) {
-            status <- 0
-        } else {
-            status <- -1
-        }
-    }
-    output_text <- paste(c(output), sep = "\n", collapse = "")
-
-    script_output <- list(status = status, output = output_text)
+    script_output <- build_output(output = output, wait = wait)
 
     if (get_runtime_script) {
         script_output$script <- full_script

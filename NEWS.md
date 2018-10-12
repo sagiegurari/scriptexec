@@ -2,6 +2,7 @@
 
 ## 0.2.3
 
+* Add execute errors to output structure #27
 * Add all dev dependencies to suggest field #23
 * Share example code in unit test, readme and vignettes #21
 * Add linter unit test #20
