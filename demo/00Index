@@ -1,1 +1,3 @@
-print-directory	"Simple script execution demo which prints a directory contents"
+execute-multiple-commands   Simple script execution demo which invokes multiple commands"
+pass-arguments-and-vars     Pass arguments (later defined as ARG1, ARG2, ...) and env vars"
+background-invocation       Run script in the background and do not wait for it to finish"

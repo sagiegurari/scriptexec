@@ -26,12 +26,12 @@ is_windows <- function() {
 #' platform_value <- get_platform_value('.sh', '.bat')
 get_platform_value <- function(unix_value, windows_value) {
     windows <- is_windows()
-    
+
     output <- unix_value
     if (windows) {
         output <- windows_value
     }
-    
+
     output
 }
 
@@ -44,13 +44,13 @@ get_platform_value <- function(unix_value, windows_value) {
 #' script <- generate_env_setup_script(c('ENV_TEST=MYENV'))
 generate_env_setup_script <- function(env = character()) {
     lines <- c()
-    
+
     prefix <- get_platform_value("export", "SET")
     for (pair in env) {
         line <- paste(prefix, pair, sep = " ")
         lines <- c(lines, line)
     }
-    
+
     paste(lines, collapse = "\n")
 }
 
@@ -70,17 +70,17 @@ modify_script <- function(script, args = c(), env = character(), print_commands 
     if (!windows && print_commands) {
         initial_commands <- "set -x"
     }
-    
+
     # setup cd command
     cwd <- getwd()
     cd_line <- paste("cd", cwd, sep = " ")
-    
+
     # setup env vars
     env_line <- character()
     if (windows) {
         env_line <- generate_env_setup_script(env)
     }
-    
+
     # setup script arguments
     index <- 1
     var_prefix <- get_platform_value("ARG", "SET ARG")
@@ -90,9 +90,10 @@ modify_script <- function(script, args = c(), env = character(), print_commands 
         args_lines <- c(args_lines, args_line)
         index <- index + 1
     }
-    
+
     script_string <- paste(script, collapse = "\n")
-    paste(initial_commands, cd_line, env_line, args_lines, script_string, sep = "\n")
+    paste(initial_commands, cd_line, env_line, args_lines, script_string,
+        sep = "\n")
 }
 
 #' Returns the command and arguments needed to execute the provided script file on the current platform.
@@ -111,9 +112,11 @@ get_command <- function(filename, runner = NULL) {
     } else {
         command <- runner
     }
-    
+
+    # nolint start (lintr bug)
     args <- get_platform_value(c(filename), c("/C", filename))
-    
+    # nolint end
+
     list(command = command, args = args)
 }
 
@@ -126,16 +129,58 @@ get_command <- function(filename, runner = NULL) {
 #' filename <- create_script_file('echo test')
 create_script_file <- function(script = "") {
     extension <- get_platform_value(".sh", ".bat")
-    
+
     # create a temporary file to store the script
     filename <- tempfile("script_", fileext = extension)
-    
+
     # write script to temprary file
     fd <- file(filename)
     writeLines(script, fd)
     close(fd)
-    
+
     filename
+}
+
+#' Builds the output structure.
+#'
+#' @param output The invocation output
+#' @param wait A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously
+#' @return The script output structure
+#' @export
+#' @examples
+#' output <- c('line 1', '\n', 'line 2')
+#' attr(output, 'status') <- 15
+#' script_output <- build_output(output)
+build_output <- function(output, wait) {
+    status <- attr(output, "status")
+    if (is.null(status)) {
+        if (wait) {
+            status <- 0
+        } else {
+            status <- -1
+        }
+    }
+
+    error_message <- attr(output, "errmsg")
+
+    output_text <- paste(c(output), sep = "\n", collapse = "")
+
+    script_output <- list(status = status, output = output_text, error = error_message)
+
+    script_output
+}
+
+#' Internal error handler.
+#'
+#' @param error The invocation error
+#' @return The invocation output
+#' @export
+on_invoke_error <- function(error) {
+    output <- ""
+    attr(output, "status") <- 1
+    attr(output, "errmsg") <- error
+
+    output
 }
 
 #' Executes a script and returns the output.
@@ -152,67 +197,71 @@ create_script_file <- function(script = "") {
 #' @return The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
 #' @export
 #' @examples
+#' library('scriptexec')
+#' library('testthat')
+#'
 #' # execute script text
-#' output <- execute('echo Current Directory:\ndir')
-#' cat(sprintf('Exit Status: %s Output: %s\n', output$status, output$output))
+#' output <- scriptexec::execute('echo command1\necho command2')
+#' expect_equal(output$status, 0)
+#' expect_equal(grepl('command1', output$output), TRUE)
+#' expect_equal(grepl('command2', output$output), TRUE)
+#'
+#' if (.Platform$OS.type == 'windows') {
+#'     ls_command <- 'dir'
+#' } else {
+#'     ls_command <- 'ls'
+#' }
+#' output <- scriptexec::execute(c('echo user home:', ls_command))
+#' expect_equal(output$status, 0)
 #'
 #' # execute multiple commands as a script
-#' output <- execute(c('cd', 'echo User Home:', 'dir'))
-#' cat(sprintf('Exit Status: %s Output: %s\n', output$status, output$output))
+#' output <- scriptexec::execute(c('cd', 'echo test'))
+#' expect_equal(output$status, 0)
 #'
 #' # pass arguments (later defined as ARG1, ARG2, ...) and env vars
-#' output <- execute('echo $ARG1 $ARG2', args = c('TEST1', 'TEST2'), env = c('MYENV=TEST3'))
-#' cat(sprintf('%s\n', output))
+#' if (.Platform$OS.type == 'windows') {
+#'     command <- 'echo %ARG1% %ARG2% %MYENV%'
+#' } else {
+#'     command <- 'echo $ARG1 $ARG2 $MYENV'
+#' }
+#' output <- scriptexec::execute(command, args = c('TEST1', 'TEST2'), env = c('MYENV=TEST3'))
+#' expect_equal(output$status, 0)
+#' expect_equal(grepl('TEST1 TEST2 TEST3', output$output), TRUE)
 #'
 #' # non zero status code is returned in case of errors
-#' output <- execute('exit 1')
-#' cat(sprintf('Status: %s\n', output$status))
-#' cat(sprintf('%s\n', output))
+#' expect_warning(output <- scriptexec::execute('exit 1'))
+#' expect_equal(output$status, 1)
 #'
-#' #do not wait for command to finish
-#' execute('echo my really long task', wait = FALSE)
-execute <- function(script = "", args = c(), env = character(), wait = TRUE, runner = NULL, 
-    print_commands = FALSE, get_runtime_script = FALSE) {
-    full_script <- modify_script(script = script, args = args, env = env, print_commands = print_commands)
-    
+#' # do not wait for command to finish
+#' output <- scriptexec::execute('echo my really long task', wait = FALSE)
+#' expect_equal(output$status, -1)
+execute <- function(script = "", args = c(), env = character(), wait = TRUE,
+    runner = NULL, print_commands = FALSE, get_runtime_script = FALSE) {
+    full_script <- modify_script(script = script, args = args, env = env,
+        print_commands = print_commands)
+
     # create a temporary file to store the script
     filename <- create_script_file(full_script)
-    
+
     command_struct <- get_command(filename, runner)
     command <- command_struct$command
     cli_args <- command_struct$args
-    
-    arg_list <- list(command = command, args = cli_args, stdout = wait, stderr = wait, 
-        stdin = "", input = NULL, env = env, wait = wait)
+
+    arg_list <- list(command = command, args = cli_args, stdout = wait,
+        stderr = wait, stdin = "", input = NULL, env = env, wait = wait)
     windows <- is_windows()
     if (windows) {
         arg_list <- c(list(minimized = TRUE, invisible = TRUE), arg_list)
     }
-    
-    output <- tryCatch({
-        do.call(system2, arg_list)
-    }, error = function(error) {
-        output <- ""
-        attr(output, "status") <- 1
-        output
-    })
-    
+
+    output <- tryCatch(do.call(system2, arg_list), error = on_invoke_error)
+
     # get output
-    status <- attr(output, "status")
-    if (is.null(status)) {
-        if (wait) {
-            status <- 0
-        } else {
-            status <- -1
-        }
-    }
-    output_text <- paste(c(output), sep = "\n", collapse = "")
-    
-    script_output <- list(status = status, output = output_text)
-    
+    script_output <- build_output(output = output, wait = wait)
+
     if (get_runtime_script) {
         script_output$script <- full_script
     }
-    
+
     script_output
 }

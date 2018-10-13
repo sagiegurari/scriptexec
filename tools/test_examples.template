@@ -1,0 +1,7 @@
+context("Examples")
+
+describe("Examples", {
+    it("all examples", {
+        {package.example.code}
+    })
+})
