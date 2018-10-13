@@ -1,5 +1,10 @@
 library(scriptexec)
 
 # execute script text
-output <- scriptexec::execute("echo running some command\necho running another command")
+if (.Platform$OS.type == "windows") {
+    ls_command <- "dir"
+} else {
+    ls_command <- "ls"
+}
+output <- scriptexec::execute(c("echo user home:", ls_command))
 cat(sprintf("Exit Status: %s Output: %s\n", output$status, output$output))

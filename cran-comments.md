@@ -10,6 +10,7 @@
 * Automatically test all demos
 * Run mac build in travis #28
 * Test specific R version in travis build
+* More demos #25
 
 ## Test environments
 
