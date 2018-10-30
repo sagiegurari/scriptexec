@@ -11,9 +11,6 @@ os:
 matrix:
   allow_failures:
     - os: osx
-      r: devel
-    - os: osx
-      r: 3.2
 before_script:
  - Rscript -e 'devtools::install_github("jimhester/covr")'
 after_success:
