@@ -51,7 +51,29 @@ generate_env_setup_script <- function(env = character()) {
         lines <- c(lines, line)
     }
 
-    paste(lines, collapse = "\n")
+    lines
+}
+
+#' Generates and returns a script which sets up the env vars for the script arguments
+#'
+#' @param args Optional script command line arguments
+#' @return The script text which sets up the env vars for the script arguments
+#' @export
+#' @examples
+#' script <- generate_args_setup_script(args = c('first', 'second'))
+generate_args_setup_script <- function(args = character()) {
+    lines <- c()
+
+    # setup script arguments
+    index <- 1
+    var_prefix <- get_platform_value("ARG", "SET ARG")
+    for (arg in args) {
+        args_line <- paste(var_prefix, index, "=", arg, sep = "")
+        lines <- c(lines, args_line)
+        index <- index + 1
+    }
+
+    lines
 }
 
 #' Modifies the provided script text and ensures the script content is executed in the correct location.
@@ -82,18 +104,9 @@ modify_script <- function(script, args = c(), env = character(), print_commands 
     }
 
     # setup script arguments
-    index <- 1
-    var_prefix <- get_platform_value("ARG", "SET ARG")
-    args_lines <- c()
-    for (arg in args) {
-        args_line <- paste(var_prefix, index, "=", arg, sep = "")
-        args_lines <- c(args_lines, args_line)
-        index <- index + 1
-    }
+    args_lines <- generate_args_setup_script(args)
 
-    script_string <- paste(script, collapse = "\n")
-    paste(initial_commands, cd_line, env_line, args_lines, script_string,
-        sep = "\n")
+    c(initial_commands, cd_line, env_line, args_lines, script)
 }
 
 #' Returns the command and arguments needed to execute the provided script file on the current platform.
@@ -194,7 +207,7 @@ on_invoke_error <- function(error) {
 #' @param runner The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
 #' @param print_commands True if to print each command before invocation (not available for windows)
 #' @param get_runtime_script True to return the actual invoked script in a script output parameter
-#' @return The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
+#' @return The process output, status code (in case wait=TRUE), error message (in case of any errors) and invoked script in the form of list(status = status, output = output_text, error = error_message, script = script)
 #' @export
 #' @examples
 #' library('scriptexec')
@@ -239,6 +252,7 @@ execute <- function(script = "", args = c(), env = character(), wait = TRUE,
     runner = NULL, print_commands = FALSE, get_runtime_script = FALSE) {
     full_script <- modify_script(script = script, args = args, env = env,
         print_commands = print_commands)
+    full_script <- paste(full_script, sep = "\n")
 
     # create a temporary file to store the script
     filename <- create_script_file(full_script)

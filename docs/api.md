@@ -2,7 +2,7 @@
 
 <!-- toc -->
 
-October 13, 2018
+October 30, 2018
 
 # DESCRIPTION
 
@@ -10,7 +10,7 @@ October 13, 2018
 ```
 Package: scriptexec
 Title: Execute Native Scripts
-Version: 0.2.3
+Version: 0.3.0
 Authors@R: person("Sagie", "Gur-Ari", email = "sagiegurari@gmail.com", role = c("aut", "cre"))
 Description: Run complex native scripts with a single command, similar to system commands.
 License: Apache License 2.0
@@ -72,7 +72,7 @@ Argument      |Description
 ## Value
 
 
- The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
+ The process output, status code (in case wait=TRUE), error message (in case of any errors) and invoked script in the form of list(status = status, output = output_text, error = error_message, script = script)
 
 
 ## Examples

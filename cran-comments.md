@@ -1,16 +1,6 @@
 ## Comments
 
-* Add execute errors to output structure #27
-* Add all dev dependencies to suggest field #23
-* Share example code in unit test, readme and vignettes #21
-* Add linter unit test #20
-* Fix tests to pass on all platforms #24
-* Fix example unit test #19
-* Script output key checks in api stability unit tests #22
-* Automatically test all demos
-* Run mac build in travis #28
-* Test specific R version in travis build
-* More demos #25
+* Fixed bug which caused incorrect command line arguments setup #30
 
 ## Test environments
 

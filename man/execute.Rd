@@ -25,7 +25,7 @@ execute(script = "", args = c(), env = character(), wait = TRUE,
 \item{get_runtime_script}{True to return the actual invoked script in a script output parameter}
 }
 \value{
-The process output and status code (in case wait=TRUE) in the form of list(status = status, output = output)
+The process output, status code (in case wait=TRUE), error message (in case of any errors) and invoked script in the form of list(status = status, output = output_text, error = error_message, script = script)
 }
 \description{
 Executes a script and returns the output.

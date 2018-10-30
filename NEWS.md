@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.0
+
+* Fixed bug which caused incorrect command line arguments setup #30
+
 ## 0.2.3
 
 * Add execute errors to output structure #27

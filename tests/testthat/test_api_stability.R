@@ -121,14 +121,14 @@ describe("API Stability", {
             script <- "echo test"
             output <- scriptexec::execute(script, NULL, NULL, TRUE, NULL,
                 TRUE, TRUE)
-            found <- grepl(script, output$script)
+            found <- find_string(script, output$script)
             expect_true(found)
         })
 
         it("get_runtime_script as named parameter", {
             script <- "echo test"
             output <- scriptexec::execute(script, get_runtime_script = TRUE)
-            found <- grepl(script, output$script)
+            found <- find_string(script, output$script)
             expect_true(found)
         })
 
@@ -143,10 +143,10 @@ describe("API Stability", {
                 runner, TRUE, TRUE)
             expect_equal(output$status, 0)
 
-            found <- grepl("echo", output$script)
+            found <- find_string("echo", output$script)
             expect_true(found)
 
-            found <- grepl("TEST_ARG MYENV", output$output)
+            found <- find_string("TEST_ARG MYENV", output$output)
             expect_equal(found, TRUE)
 
             output <- scriptexec::execute(command, "TEST_ARG", env, FALSE)
@@ -166,10 +166,10 @@ describe("API Stability", {
                 get_runtime_script = TRUE)
             expect_equal(output$status, 0)
 
-            found <- grepl("echo", output$script)
+            found <- find_string("echo", output$script)
             expect_true(found)
 
-            found <- grepl("TEST_ARG MYENV", output$output)
+            found <- find_string("TEST_ARG MYENV", output$output)
             expect_equal(found, TRUE)
 
             output <- scriptexec::execute(script = command, args = args,

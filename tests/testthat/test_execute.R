@@ -91,7 +91,7 @@ describe("execute", {
             script <- "echo test"
             output <- scriptexec::execute(script, get_runtime_script = TRUE)
             expect_false(is.null(output$script))
-            found <- grepl("echo test", output$script)
+            found <- find_string("echo test", output$script)
             expect_true(found)
         })
     })

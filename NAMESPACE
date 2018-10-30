@@ -3,6 +3,7 @@
 export(build_output)
 export(create_script_file)
 export(execute)
+export(generate_args_setup_script)
 export(generate_env_setup_script)
 export(get_command)
 export(get_platform_value)
