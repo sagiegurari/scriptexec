@@ -11,15 +11,14 @@ describe("generate_env_setup_script", {
     })
 
     it("multiple env vars", {
-        script <- scriptexec::generate_env_setup_script(c("ENV1=VALUE1",
-            "ENV2=VALUE2"))
+        script <- scriptexec::generate_env_setup_script(c("ENV1=v1", "ENV2=v2"))
 
         length <- length(script)
         expect_equal(length, 2)
 
         prefix <- get_os_string("export", "SET")
-        expected_result <- c(paste(prefix, "ENV1=VALUE1", sep = " "), paste(prefix,
-            "ENV2=VALUE2", sep = " "))
+        expected_result <- c(paste(prefix, "ENV1=v1", sep = " "), paste(prefix,
+            "ENV2=v2", sep = " "))
 
         expect_equal(expected_result, script)
     })
