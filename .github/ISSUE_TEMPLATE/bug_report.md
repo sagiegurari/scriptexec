@@ -19,6 +19,6 @@ The error stack trace
 ```
 
 **Code Sample**
-````r
+```r
 # paste code here
-````
+```
