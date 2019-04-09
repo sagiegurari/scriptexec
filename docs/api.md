@@ -6,7 +6,6 @@ April 09, 2019
 
 # DESCRIPTION
 
-
 ```
 Package: scriptexec
 Title: Execute Native Scripts
@@ -31,7 +30,8 @@ VignetteBuilder: knitr
 ```
 
 
-# `execute`: Executes a script and returns the output.
+# `execute`
+> Executes a script and returns the output.
  The stdout and stderr are captured and returned.
  In case of errors, the exit code will return in the status field.
 
@@ -45,11 +45,9 @@ VignetteBuilder: knitr
 
 ## Usage
 
-
 ```r
 execute(script = "", args = c(), env = character(), wait = TRUE,
   runner = NULL, print_commands = FALSE, get_runtime_script = FALSE)
-
 ```
 
 
@@ -57,27 +55,13 @@ execute(script = "", args = c(), env = character(), wait = TRUE,
 
 Argument      |Description
 ------------- |----------------
-
-```script
-```     |     The script text
-
-```args
-```     |     Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)
-
-```env
-```     |     Optional character vector of name=value strings to set environment variables
-
-```wait
-```     |     A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
-
-```runner
-```     |     The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
-
-```print_commands
-```     |     True if to print each command before invocation (not available for windows)
-
-```get_runtime_script
-```     |     True to return the actual invoked script in a script output parameter
+```script```     |     The script text
+```args```     |     Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)
+```env```     |     Optional character vector of name=value strings to set environment variables
+```wait```     |     A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
+```runner```     |     The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
+```print_commands```     |     True if to print each command before invocation (not available for windows)
+```get_runtime_script```     |     True to return the actual invoked script in a script output parameter
 
 ## Value
 
@@ -86,7 +70,6 @@ Argument      |Description
 
 
 ## Examples
-
 
 ```r 
  library("scriptexec")
@@ -127,6 +110,5 @@ Argument      |Description
  # do not wait for command to finish
  output <- scriptexec::execute("echo my really long task", wait = FALSE)
  expect_equal(output$status, -1)
-
-``` 
+ ``` 
 

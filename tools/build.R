@@ -72,10 +72,11 @@ generate_docs <- function() {
 
     api_doc <- readLines(api_doc_file)
 
-    api_doc <- gsub(pattern = "```", replace = "\n```", x = api_doc)
+    api_doc <- gsub(pattern = "knitr```", replace = "knitr\n```", x = api_doc)
     api_doc <- gsub(pattern = "\r", replace = "", x = api_doc)
     api_doc <- gsub(pattern = "[ \t]+\n", replace = "\n", x = api_doc)
     api_doc <- gsub(pattern = "\n\n", replace = "\n", x = api_doc)
+    api_doc <- gsub(pattern = "`:", replace = "`\n>", x = api_doc)
 
     description_doc <- get_description_doc(api_doc)
     function_doc <- get_function_api_doc(name = "execute", text = api_doc)
