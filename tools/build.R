@@ -101,9 +101,14 @@ build <- function() {
     devtools::check()
 }
 
-build_windows <- function() {
-    print("[build] Running Windows Build")
-    devtools::build_win()
+check_win <- function() {
+    print("[build] Running Check Windows")
+    devtools::check_win()
+}
+
+check_rhub <- function() {
+    print("[build] Running Check r-hub")
+    devtools::check_rhub()
 }
 
 release <- function() {
@@ -311,7 +316,7 @@ dev_flow <- c(docs_flow, generate_test_code, format, test)
 default_flow <- c(dev_flow, lint, build)
 flows <- list(format = format_flow, dev = dev_flow, development = dev_flow,
     docs = docs_flow, default = default_flow, windows = c(default_flow,
-        build_windows), release = c(default_flow, release))
+        check_win), release = c(default_flow, release))
 
 args <- commandArgs(trailingOnly = TRUE)
 flow_name <- "default"

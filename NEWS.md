@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.3.1
+
+* Update dependencies #31
+* Update windows build as building R dependencies is unstable
+
 ## 0.3.0
 
 * Fixed bug which caused incorrect command line arguments setup #30
