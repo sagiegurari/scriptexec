@@ -2,7 +2,7 @@
 
 <!-- toc -->
 
-October 30, 2018
+April 09, 2019
 
 # DESCRIPTION
 
@@ -10,7 +10,7 @@ October 30, 2018
 ```
 Package: scriptexec
 Title: Execute Native Scripts
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: person("Sagie", "Gur-Ari", email = "sagiegurari@gmail.com", role = c("aut", "cre"))
 Description: Run complex native scripts with a single command, similar to system commands.
 License: Apache License 2.0
@@ -18,24 +18,20 @@ URL: https://github.com/sagiegurari/scriptexec
 BugReports: https://github.com/sagiegurari/scriptexec/issues
 Depends: R (>= 3.2.3)
 Encoding: UTF-8
-RoxygenNote: 6.1.0
-Suggests: knitr (>= 1.20),
-    testthat (>= 2.0.0),
-    lintr (>= 1.0.2),
-    formatR (>= 1.5),
-    devtools (>= 1.13.6),
-    Rcpp (>= 0.12.19),
-    digest (>= 0.6.17),
-    roxygen2 (>= 6.1.0),
-    rmarkdown (>= 1.10),
-    rversions (>= 1.0.3)
+RoxygenNote: 6.1.1
+Suggests: knitr (>= 1.22),
+    testthat (>= 2.0.1),
+    lintr (>= 1.0.3),
+    formatR (>= 1.6),
+    devtools (>= 2.0.2),
+    roxygen2 (>= 6.1.1),
+    rmarkdown (>= 1.12),
+    Rd2md (>= 0.0.2)
 VignetteBuilder: knitr
 ```
 
 
-# `execute`
-
-Executes a script and returns the output.
+# `execute`: Executes a script and returns the output.
  The stdout and stderr are captured and returned.
  In case of errors, the exit code will return in the status field.
 
@@ -61,13 +57,27 @@ execute(script = "", args = c(), env = character(), wait = TRUE,
 
 Argument      |Description
 ------------- |----------------
-`script`     |     The script text
-`args`     |     Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)
-`env`     |     Optional character vector of name=value strings to set environment variables
-`wait`     |     A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
-`runner`     |     The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
-`print_commands`     |     True if to print each command before invocation (not available for windows)
-`get_runtime_script`     |     True to return the actual invoked script in a script output parameter
+
+```script
+```     |     The script text
+
+```args
+```     |     Optional script command line arguments (arguments are added as variables in the script named ARG1, ARG2, ...)
+
+```env
+```     |     Optional character vector of name=value strings to set environment variables
+
+```wait
+```     |     A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously (output status will be -1)
+
+```runner
+```     |     The executable used to invoke the script (by default cmd.exe for windows, sh for other platforms)
+
+```print_commands
+```     |     True if to print each command before invocation (not available for windows)
+
+```get_runtime_script
+```     |     True to return the actual invoked script in a script output parameter
 
 ## Value
 
