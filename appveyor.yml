@@ -37,4 +37,5 @@ environment:
 
 matrix:
   allow_failures:
+    - R_VERSION: oldrel
     - R_VERSION: devel
