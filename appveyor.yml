@@ -13,7 +13,7 @@ install:
 
 build_script:
   - travis-tool.sh install_deps
-  - travis-tool.sh github_package jimhester/covr
+  - travis-tool.sh github_package jimhester/covr || true
 
 test_script:
   - travis-tool.sh run_tests
@@ -22,11 +22,11 @@ on_failure:
   - travis-tool.sh dump_logs
 
 on_success:
-  - Rscript -e "covr::codecov()"
+  - Rscript -e "covr::codecov()" || true
 
 environment:
   NOT_CRAN: true
-  
+
   matrix:
   - R_VERSION: release
 
