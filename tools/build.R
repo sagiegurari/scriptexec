@@ -103,7 +103,7 @@ build <- function() {
 
 check_win <- function() {
     print("[build] Running Check Windows")
-    devtools::check_win()
+    devtools::check_win_devel()
 }
 
 check_rhub <- function() {
