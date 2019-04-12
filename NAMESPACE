@@ -2,6 +2,7 @@
 
 export(build_output)
 export(create_script_file)
+export(create_system_call_args)
 export(execute)
 export(generate_args_setup_script)
 export(generate_env_setup_script)

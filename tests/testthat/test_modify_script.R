@@ -42,4 +42,14 @@ describe("modify_script", {
         found <- grepl("set -x", script)
         expect_true(found, TRUE)
     })
+
+    it("generate_env_setup_script windows", {
+        script <- scriptexec::modify_script("", env = c("e=v"), is_windows_os = TRUE)
+        script <- paste(script, collapse = "\n")
+
+        prefix <- get_os_string("export", "SET")
+        expected_result <- c(paste(prefix, "e=v", sep = " "))
+        found <- grepl(expected_result, script)
+        expect_true(found, TRUE)
+    })
 })
