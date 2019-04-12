@@ -360,6 +360,12 @@ Source: CRAN
 Version: 0.10
 Hash: 63f43c6ff14d92e1d65ca6c21d45a1eb
 
+Package: rversions
+Source: CRAN
+Version: 1.1.0
+Hash: 3467c6cc8729fcecff2c842215b2b64d
+Requires: curl, xml2
+
 Package: sessioninfo
 Source: CRAN
 Version: 1.1.1
