@@ -192,12 +192,19 @@ get_description_doc <- function(text) {
     print("[build] Extrating Description Documention")
 
     doc <- c()
+    started <- FALSE
     for (line in text) {
-        if (startsWith(x = line, prefix = "# `")) {
-            break
-        }
+        if (started) {
+            if (startsWith(x = line, prefix = "# `")) {
+                break
+            }
 
-        doc <- c(doc, line)
+            doc <- c(doc, line)
+        } else if (startsWith(x = line, prefix = "# DESCRIPTION")) {
+            started <- TRUE
+
+            doc <- c(doc, line)
+        }
     }
 
     doc
