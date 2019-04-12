@@ -4,12 +4,15 @@
 \alias{get_platform_value}
 \title{Returns the value based on the current platform.}
 \usage{
-get_platform_value(unix_value, windows_value)
+get_platform_value(unix_value = c(), windows_value = c(),
+  force_windows = FALSE)
 }
 \arguments{
 \item{unix_value}{The unix platform value}
 
 \item{windows_value}{The windows platform value}
+
+\item{force_windows}{True to force windows (defaulted to OS validation)}
 }
 \value{
 unix_value in case of unix system, else the windows_value

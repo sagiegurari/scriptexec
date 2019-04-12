@@ -25,12 +25,21 @@ describe("modify_script", {
         expect_false(found)
     })
 
-    it("print_commands", {
+    it("print_commands default", {
         script <- scriptexec::modify_script("", print_commands = TRUE)
         script <- paste(script, collapse = "\n")
 
         command <- get_os_string("set -x", "")
         found <- grepl(command, script)
+        expect_true(found, TRUE)
+    })
+
+    it("print_commands unix", {
+        script <- scriptexec::modify_script("", print_commands = TRUE,
+            is_windows_os = FALSE)
+        script <- paste(script, collapse = "\n")
+
+        found <- grepl("set -x", script)
         expect_true(found, TRUE)
     })
 })

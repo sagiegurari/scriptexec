@@ -5,7 +5,7 @@
 \title{Modifies the provided script text and ensures the script content is executed in the correct location.}
 \usage{
 modify_script(script, args = c(), env = character(),
-  print_commands = FALSE)
+  print_commands = FALSE, is_windows_os = FALSE)
 }
 \arguments{
 \item{script}{The script text}
@@ -15,6 +15,8 @@ modify_script(script, args = c(), env = character(),
 \item{env}{Optional character vector of name=value strings to set environment variables}
 
 \item{print_commands}{True if to print each command before invocation (not available for windows)}
+
+\item{is_windows_os}{True if windows based OS, false for unix based OS}
 }
 \value{
 The modified script text
