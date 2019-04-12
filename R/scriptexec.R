@@ -20,12 +20,17 @@ is_windows <- function() {
 #'
 #' @param unix_value The unix platform value
 #' @param windows_value The windows platform value
+#' @param force_windows True to force windows (defaulted to OS validation)
 #' @return unix_value in case of unix system, else the windows_value
 #' @export
 #' @examples
 #' platform_value <- get_platform_value('.sh', '.bat')
-get_platform_value <- function(unix_value, windows_value) {
-    windows <- is_windows()
+get_platform_value <- function(unix_value = c(), windows_value = c(), force_windows = FALSE) {
+    if (force_windows) {
+        windows <- TRUE
+    } else {
+        windows <- is_windows()
+    }
 
     output <- unix_value
     if (windows) {
@@ -82,14 +87,15 @@ generate_args_setup_script <- function(args = character()) {
 #' @param args Optional script command line arguments
 #' @param env Optional character vector of name=value strings to set environment variables
 #' @param print_commands True if to print each command before invocation (not available for windows)
+#' @param is_windows_os True if windows based OS, false for unix based OS
 #' @return The modified script text
 #' @export
 #' @examples
 #' script <- modify_script(script = 'echo test', args = c('first', 'second'), env = c('MYENV=MYENV'))
-modify_script <- function(script, args = c(), env = character(), print_commands = FALSE) {
-    windows <- is_windows()
+modify_script <- function(script, args = c(), env = character(), print_commands = FALSE,
+    is_windows_os = FALSE) {
     initial_commands <- ""
-    if (!windows && print_commands) {
+    if (!is_windows_os && print_commands) {
         initial_commands <- "set -x"
     }
 
@@ -99,7 +105,7 @@ modify_script <- function(script, args = c(), env = character(), print_commands 
 
     # setup env vars
     env_line <- character()
-    if (windows) {
+    if (is_windows_os) {
         env_line <- generate_env_setup_script(env)
     }
 
@@ -196,6 +202,28 @@ on_invoke_error <- function(error) {
     output
 }
 
+#' Returns the system call arguments.
+#'
+#' @param command The command to invoke
+#' @param cli_args Possible list of command line arguments
+#' @param wait A TRUE/FALSE parameter, indicating whether the function should wait for the command to finish, or run it asynchronously
+#' @param env Optional character vector of name=value strings to set environment variables
+#' @param is_windows_os True if windows based OS, false for unix based OS
+#' @return The system call arguments
+#' @export
+#' @examples
+#' filename <- './myfile.sh'
+#' arg_list <- create_system_call_args('sh', c(filename), TRUE, character(), FALSE)
+create_system_call_args <- function(command, cli_args, wait, env, is_windows_os) {
+    arg_list <- list(command = command, args = cli_args, stdout = wait,
+        stderr = wait, stdin = "", input = NULL, env = env, wait = wait)
+    if (is_windows_os) {
+        arg_list <- c(list(minimized = TRUE, invisible = TRUE), arg_list)
+    }
+
+    arg_list
+}
+
 #' Executes a script and returns the output.
 #' The stdout and stderr are captured and returned.
 #' In case of errors, the exit code will return in the status field.
@@ -250,8 +278,10 @@ on_invoke_error <- function(error) {
 #' expect_equal(output$status, -1)
 execute <- function(script = "", args = c(), env = character(), wait = TRUE,
     runner = NULL, print_commands = FALSE, get_runtime_script = FALSE) {
+    is_windows_os <- is_windows()
+
     full_script <- modify_script(script = script, args = args, env = env,
-        print_commands = print_commands)
+        print_commands = print_commands, is_windows_os = is_windows_os)
     full_script <- paste(full_script, sep = "\n")
 
     # create a temporary file to store the script
@@ -261,12 +291,7 @@ execute <- function(script = "", args = c(), env = character(), wait = TRUE,
     command <- command_struct$command
     cli_args <- command_struct$args
 
-    arg_list <- list(command = command, args = cli_args, stdout = wait,
-        stderr = wait, stdin = "", input = NULL, env = env, wait = wait)
-    windows <- is_windows()
-    if (windows) {
-        arg_list <- c(list(minimized = TRUE, invisible = TRUE), arg_list)
-    }
+    arg_list <- create_system_call_args(command, cli_args, wait, env, is_windows_os)
 
     output <- tryCatch(do.call(system2, arg_list), error = on_invoke_error)
 

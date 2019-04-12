@@ -1,14 +1,16 @@
 ## Comments
 
-* Fixed bug which caused incorrect command line arguments setup #30
-* Make travis mac builds optional as R support for mac on travis is unstable
+* Update dependencies #31
+* Support 100% converage regardless of OS
+* Update windows build as building R dependencies is unstable
 
 ## Test environments
 
-* local raspberry pi install, R version 3.5.1 (2018-07-02)
+* local raspberry pi install, R version 3.5.3 (2019-03-11)
 * linux (via travis) release, oldrel, devel, 3.2
 * windows (via appveyor) release, oldrel, devel
-* build_win
+* win builder
+* R-hub builder
 
 ## R CMD check results
 

@@ -12,3 +12,4 @@ LICENSE
 temp
 ^packrat/
 ^\.Rprofile$
+^CRAN-RELEASE$
