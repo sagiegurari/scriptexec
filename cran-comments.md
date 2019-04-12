@@ -1,6 +1,7 @@
 ## Comments
 
 * Update dependencies #31
+* Support 100% converage regardless of OS
 * Update windows build as building R dependencies is unstable
 
 ## Test environments
