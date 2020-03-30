@@ -40,6 +40,12 @@ jobs:
     - name: Check
       run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
       shell: Rscript {0}
+    - name: Lint
+      if: matrix.config.stable == true
+      run: |
+        remotes::install_cran("lintr")
+        lintr::lint_package()
+      shell: Rscript {0}
     - name: Coverage
       if: matrix.config.stable == true
       run: |
