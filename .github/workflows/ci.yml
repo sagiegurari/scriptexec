@@ -1,0 +1,44 @@
+name: Continuous Integration
+on: [push, pull_request]
+jobs:
+  ci:
+    name: Continuous Integration
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        - {os: windows-latest, r: 'release'}
+        - {os: windows-latest, r: 'oldrel'}
+        - {os: windows-latest, r: 'devel'}
+        - {os: macOS-latest, r: 'release'}
+        - {os: macOS-latest, r: 'oldrel'}
+        - {os: macOS-latest, r: 'devel'}
+        - {os: ubuntu-latest, r: 'release'}
+        - {os: ubuntu-latest, r: 'oldrel'}
+        - {os: ubuntu-latest, r: 'devel'}
+        - {os: ubuntu-latest, r: '3.2', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+        - {os: ubuntu-latest, r: '3.3', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+        - {os: ubuntu-latest, r: '3.4', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+        - {os: ubuntu-latest, r: '3.5', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+        - {os: ubuntu-latest, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: ${{ matrix.config.rspm }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - uses: r-lib/actions/setup-r@master
+      with:
+        r-version: ${{ matrix.config.r }}
+    - uses: r-lib/actions/setup-pandoc@master
+    - name: Install remotes
+        run: install.packages('remotes')
+        shell: Rscript {0}
+    - name: Install dependencies
+      run: |
+        remotes::install_deps(dependencies = TRUE)
+        remotes::install_cran("rcmdcheck")
+      shell: Rscript {0}
+    - name: Check
+      run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
+      shell: Rscript {0}
