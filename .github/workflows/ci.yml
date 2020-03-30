@@ -8,20 +8,20 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'release', dependencies_check: true}
-          - {os: windows-latest, r: 'devel', dependencies_check: false}
-          - {os: macOS-latest, r: 'release', dependencies_check: true}
-          - {os: macOS-latest, r: 'devel', dependencies_check: false}
-          - {os: ubuntu-latest, r: 'release', dependencies_check: true}
-          - {os: ubuntu-latest, r: '3.2', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest", dependencies_check: false}
-          - {os: ubuntu-latest, r: '3.3', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest", dependencies_check: false}
-          - {os: ubuntu-latest, r: '3.4', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest", dependencies_check: false}
-          - {os: ubuntu-latest, r: '3.5', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest", dependencies_check: false}
-          - {os: ubuntu-latest, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest", dependencies_check: false}
+          - {os: windows-latest, r: 'release', stable: true}
+          - {os: windows-latest, r: 'devel', stable: false}
+          - {os: macOS-latest, r: 'release', stable: true}
+          - {os: macOS-latest, r: 'devel', stable: false}
+          - {os: ubuntu-latest, r: 'release', stable: true}
+          - {os: ubuntu-latest, r: '3.2', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest", stable: false}
+          - {os: ubuntu-latest, r: '3.3', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest", stable: false}
+          - {os: ubuntu-latest, r: '3.4', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest", stable: false}
+          - {os: ubuntu-latest, r: '3.5', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest", stable: false}
+          - {os: ubuntu-latest, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest", stable: false}
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
-      _R_CHECK_FORCE_SUGGESTS_: ${{ matrix.config.dependencies_check }}
+      _R_CHECK_FORCE_SUGGESTS_: ${{ matrix.config.stable }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -41,6 +41,7 @@ jobs:
       run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
       shell: Rscript {0}
     - name: Coverage
+      if: matrix.config.stable == true
       run: |
         remotes::install_cran("covr")
         covr::codecov()
