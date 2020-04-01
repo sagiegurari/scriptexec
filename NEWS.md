@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Master
+
+* Migrate build flows to github actions.
+
 ## 0.3.1
 
 * Update dependencies #31
