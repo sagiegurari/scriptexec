@@ -1,0 +1,54 @@
+name: Continuous Integration
+on: [push, pull_request]
+jobs:
+  ci:
+    name: Continuous Integration
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: windows-latest, r: 'release', stable: true}
+          - {os: windows-latest, r: 'devel'}
+          - {os: macOS-latest, r: 'release', stable: true}
+          - {os: macOS-latest, r: 'devel'}
+          - {os: ubuntu-latest, r: 'release'}
+          - {os: ubuntu-latest, r: '3.2', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+          - {os: ubuntu-latest, r: '3.3', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+          - {os: ubuntu-latest, r: '3.4', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+          - {os: ubuntu-latest, r: '3.5', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+          - {os: ubuntu-latest, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: ${{ matrix.config.rspm }}
+      _R_CHECK_FORCE_SUGGESTS_: ${{ matrix.config.stable || false }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - uses: r-lib/actions/setup-r@master
+      with:
+        r-version: ${{ matrix.config.r }}
+    - uses: r-lib/actions/setup-pandoc@master
+    - name: Install Remotes
+      run: install.packages('remotes')
+      shell: Rscript {0}
+    - name: Install Dependencies
+      run: |
+        remotes::install_deps(dependencies = TRUE)
+        remotes::install_cran("rcmdcheck")
+      shell: Rscript {0}
+    - name: Check
+      run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
+      shell: Rscript {0}
+    - name: Lint
+      if: matrix.config.stable == true || matrix.config.lint
+      run: |
+        remotes::install_cran("lintr")
+        lintr::lint_package()
+      shell: Rscript {0}
+    - name: Coverage
+      if: matrix.config.stable || matrix.config.coverage
+      run: |
+        remotes::install_cran("covr")
+        covr::codecov()
+      shell: Rscript {0}
