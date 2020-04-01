@@ -12,7 +12,7 @@ jobs:
           - {os: windows-latest, r: 'devel'}
           - {os: macOS-latest, r: 'release', stable: true}
           - {os: macOS-latest, r: 'devel'}
-          - {os: ubuntu-latest, r: 'release', coverage: true}
+          - {os: ubuntu-latest, r: 'release'}
           - {os: ubuntu-latest, r: '3.2', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
           - {os: ubuntu-latest, r: '3.3', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
           - {os: ubuntu-latest, r: '3.4', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
@@ -41,8 +41,7 @@ jobs:
       run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
       shell: Rscript {0}
     - name: Lint
-      if: matrix.config.stable == true
-      continue-on-error: true
+      if: matrix.config.stable == true || matrix.config.lint
       run: |
         remotes::install_cran("lintr")
         lintr::lint_package()
