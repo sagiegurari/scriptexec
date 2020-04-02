@@ -12,4 +12,8 @@ LICENSE
 temp
 ^packrat/
 ^\.Rprofile$
+project.Rproj
 ^CRAN-RELEASE$
+^scriptexec\.Rcheck$
+^scriptexec.*\.tar\.gz$
+^scriptexec.*\.tgz$
