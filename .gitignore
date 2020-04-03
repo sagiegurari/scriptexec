@@ -3,7 +3,11 @@
 .Rproj.user
 .Rhistory
 .RData
+project.Rproj
 inst/doc
 /temp
 packrat/lib*/
 packrat/src/
+scriptexec.Rcheck/
+scriptexec*.tar.gz
+scriptexec*.tgz
