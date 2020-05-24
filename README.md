@@ -1,6 +1,6 @@
 # scriptexec
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/scriptexec)](https://cran.r-project.org/package=scriptexec) [![GitHub release](https://img.shields.io/github/release/sagiegurari/scriptexec.svg)](https://github.com/sagiegurari/scriptexec/releases) [![Continuous Integration](https://github.com/sagiegurari/scriptexec/workflows/Continuous%20Integration/badge.svg?branch=master)](https://github.com/sagiegurari/scriptexec/actions) [![codecov](https://codecov.io/gh/sagiegurari/scriptexec/branch/master/graph/badge.svg)](https://codecov.io/gh/sagiegurari/scriptexec)<br>
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/scriptexec)](https://cran.r-project.org/package=scriptexec) [![GitHub release](https://img.shields.io/github/release/sagiegurari/scriptexec.svg)](https://github.com/sagiegurari/scriptexec/releases) [![CI](https://github.com/sagiegurari/scriptexec/workflows/CI/badge.svg?branch=master)](https://github.com/sagiegurari/scriptexec/actions) [![codecov](https://codecov.io/gh/sagiegurari/scriptexec/branch/master/graph/badge.svg)](https://codecov.io/gh/sagiegurari/scriptexec)<br>
 [![License](https://img.shields.io/cran/l/scriptexec.svg)](https://github.com/sagiegurari/scriptexec/blob/master/LICENSE) [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/scriptexec)](https://github.com/sagiegurari/scriptexec/releases) [![Rdoc](http://www.rdocumentation.org/badges/version/scriptexec?0.3.1)](http://www.rdocumentation.org/packages/scriptexec)
 
 > Run complex native scripts with a single command, similar to system commands.
